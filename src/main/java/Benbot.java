@@ -42,6 +42,10 @@ public class Benbot {
 
         // todo: create a new todo task
         case "todo" -> {
+            if (command.strip().equals("todo")) {
+                throw new InvalidTaskException();
+            }
+
             Todo todo = new Todo(parameters);
             tasks.add(todo);
             System.out.println("I have created a new task for you:");
@@ -51,6 +55,10 @@ public class Benbot {
 
         // deadline: create a new deadline task
         case "deadline" -> {
+            if (!parameters.contains("/by")) {
+                throw new InvalidTaskException();
+            }
+
             String name = parameters.strip().split(" /by ")[0];
             String by = parameters.strip().split(" /by ")[1];
             Deadline deadline = new Deadline(name, by);
@@ -62,6 +70,10 @@ public class Benbot {
 
         // event: create a new deadline task
         case "event" -> {
+            if (!parameters.contains("/from") || !parameters.contains("/to")) {
+                throw new InvalidTaskException();
+            }
+
             String name = parameters.strip().split(" /from | /to ")[0];
             String from = parameters.strip().split(" /from | /to ")[1];
             String to = parameters.strip().split(" /from | /to ")[2];
@@ -73,9 +85,7 @@ public class Benbot {
         }
 
         // do nothing (for now)
-        default -> {
-            System.out.println("Unknown command...");
-        }
+        default -> throw new UnknownCommandException();
         }
     }
 
@@ -98,7 +108,11 @@ public class Benbot {
             Scanner scan = new Scanner(System.in);
             String command = scan.nextLine();
             System.out.println("------------------------------");
-            process(command);
+            try {
+                process(command);
+            } catch (UnknownCommandException | InvalidTaskException e) {
+                System.out.println(e);
+            }
             System.out.println("------------------------------");
         }
         System.out.println(logo);
