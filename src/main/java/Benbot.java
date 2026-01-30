@@ -21,6 +21,8 @@ public class Benbot {
     /** Processes the command given to the bot */
     private static void process(String command) {
         String instruction = command.strip().split(" ")[0];
+        String parameters = command.replaceFirst(instruction + " ", "");
+
         switch (instruction) {
         // bye: exit program
         case "bye":
@@ -33,6 +35,13 @@ public class Benbot {
             for (int i = 0; i < tasks.size(); i++) {
                 System.out.println(i + 1 + ". " + tasks.get(i));
             }
+            break;
+
+        // (un)mark: mark a task as (not) done
+        case "mark":
+        case "unmark":
+            Task task = tasks.get(Integer.parseInt(parameters));
+            task.setDone(instruction.equals("mark"));
             break;
 
         // add as new task
