@@ -20,19 +20,26 @@ public class Benbot {
 
     /** Processes the command given to the bot */
     private static void process(String command) {
-        if (command.equals("bye")) {
-            // bye: exit program
+        String instruction = command.strip().split(" ")[0];
+        switch (instruction) {
+        // bye: exit program
+        case "bye":
             print("Goodbye! It was a nice chat! :)");
             canExit = true;
-        } else if (command.equals("list")) {
-            // list: display all tasks
+            break;
+
+        // list: display all tasks
+        case "list":
             for (int i = 0; i < tasks.size(); i++) {
                 System.out.println(i + 1 + ". " + tasks.get(i));
             }
-        } else {
-            // add as new task
+            break;
+
+        // add as new task
+        default:
             tasks.add(new Task(command));
             print("added: " + command);
+            break;
         }
     }
 
