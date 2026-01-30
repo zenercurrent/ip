@@ -2,7 +2,7 @@
  * A task created by the user.
  * Can be marked as done.
  */
-public class Task {
+public abstract class Task {
     private String name;
 
     public String getName() {
