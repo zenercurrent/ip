@@ -1,4 +1,14 @@
 public class Benbot {
+
+    /** Prints the lines with horizontal borders */
+    private static void print(String... lines) {
+        System.out.println("------------------------------");
+        for (String line : lines) {
+            System.out.println(line);
+        }
+        System.out.println("> ");
+    }
+
     public static void main(String[] args) {
         String logo = """
                 ▄▄                ▄▄               \s
@@ -8,11 +18,7 @@ public class Benbot {
                 ████▀ ▀█▄▄▄ ██ ██ ████▀ ▀███▀  ██  \s
                 """;
         System.out.println(logo);
-        System.out.println("------------------------------");
-        System.out.println("Hello there! I am Benbot, your personal assistant.");
-        System.out.println("How can I help?");
-        System.out.println("------------------------------");
-        System.out.println("Goodbye! Hope to see you again!");
-        System.out.println("------------------------------");
+        print("Hello there! I am Benbot, your personal assistant.", "How can I help?");
+        print("Goodbye! Hope to see you again!");
     }
 }
