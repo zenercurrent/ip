@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Benbot {
     /** A collection of saved tasks */
-    private static final ArrayList<String> tasks = new ArrayList<>();
+    private static final ArrayList<Task> tasks = new ArrayList<>();
 
     /** Flag that allows the bot to terminate */
     private static boolean canExit = false;
@@ -31,7 +31,7 @@ public class Benbot {
             }
         } else {
             // add as new task
-            tasks.add(command);
+            tasks.add(new Task(command));
             print("added: " + command);
         }
     }
