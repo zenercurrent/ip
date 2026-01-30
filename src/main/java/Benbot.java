@@ -84,7 +84,16 @@ public class Benbot {
             System.out.println("There are now " + tasks.size() + " task(s) to be done.");
         }
 
-        // do nothing (for now)
+        case "delete" -> {
+            int i = Integer.parseInt(parameters);   // todo: handle possible exception here
+            Task task = tasks.get(i - 1);
+            tasks.remove(i);
+            System.out.println("Noted with thanks. I have removed the task:");
+            System.out.println("\t" + task);
+            System.out.println("Now you are left with " + tasks.size() + " tasks.");
+        }
+
+        // unknown command
         default -> throw new UnknownCommandException();
         }
     }
