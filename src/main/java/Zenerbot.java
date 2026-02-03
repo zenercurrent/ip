@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Benbot {
+public class Zenerbot {
     /** A collection of saved tasks */
     private static final ArrayList<Task> tasks = new ArrayList<>();
 
@@ -100,15 +100,17 @@ public class Benbot {
 
     public static void main(String[] args) {
         String logo = """
-                ▄▄                ▄▄               \s
-                ██                ██           ██  \s
-                ████▄ ▄█▀█▄ ████▄ ████▄ ▄███▄ ▀██▀▀\s
-                ██ ██ ██▄█▀ ██ ██ ██ ██ ██ ██  ██  \s
-                ████▀ ▀█▄▄▄ ██ ██ ████▀ ▀███▀  ██  \s
-                """;
+                                                               \s
+                                              ▄▄               \s
+                                              ██           ██  \s
+                ▀▀▀██ ▄█▀█▄ ████▄ ▄█▀█▄ ████▄ ████▄ ▄███▄ ▀██▀▀\s
+                  ▄█▀ ██▄█▀ ██ ██ ██▄█▀ ██ ▀▀ ██ ██ ██ ██  ██  \s
+                ▄██▄▄ ▀█▄▄▄ ██ ██ ▀█▄▄▄ ██    ████▀ ▀███▀  ██  \s
+                                                               \s
+                                                               \s""";
         System.out.println(logo);
         System.out.println("------------------------------");
-        System.out.println("Hello there! I am Benbot, your personal assistant.");
+        System.out.println("Hello there! I am ZenerBot, your personal assistant.");
         System.out.println("How can I help?");
         System.out.println("------------------------------");
 
