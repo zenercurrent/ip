@@ -1,0 +1,16 @@
+list
+todo todotask
+deadline deadlinetask /by tonight
+event eventtask /from today /to next week
+list
+mark 2
+mark 3
+list
+unmark 3
+delete 1
+list
+asdfghjkl
+deadline d
+event e
+list
+bye

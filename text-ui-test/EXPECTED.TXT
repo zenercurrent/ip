@@ -1,7 +1,114 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+                                                
+                              ▄▄                
+                              ██           ██   
+▀▀▀██ ▄█▀█▄ ████▄ ▄█▀█▄ ████▄ ████▄ ▄███▄ ▀██▀▀ 
+  ▄█▀ ██▄█▀ ██ ██ ██▄█▀ ██ ▀▀ ██ ██ ██ ██  ██   
+▄██▄▄ ▀█▄▄▄ ██ ██ ▀█▄▄▄ ██    ████▀ ▀███▀  ██   
+                                                
+                                                
+------------------------------
+Hello there! I am ZenerBot, your personal assistant.
+How can I help?
+------------------------------
+> 
+------------------------------
+These are your current tasks:
+------------------------------
+> 
+------------------------------
+I have created a new task for you:
+	[T][ ] todotask
+There are now 1 task(s) to be done.
+------------------------------
+> 
+------------------------------
+I have created a new task for you:
+	[D][ ] deadlinetask (by: tonight)
+There are now 2 task(s) to be done.
+------------------------------
+> 
+------------------------------
+I have created a new task for you:
+	[E][ ] eventtask (from: today to: next week)
+There are now 3 task(s) to be done.
+------------------------------
+> 
+------------------------------
+These are your current tasks:
+1. [T][ ] todotask
+2. [D][ ] deadlinetask (by: tonight)
+3. [E][ ] eventtask (from: today to: next week)
+------------------------------
+> 
+------------------------------
+Good work. This task is done:
+	[D][ ] deadlinetask (by: tonight)
+------------------------------
+> 
+------------------------------
+Good work. This task is done:
+	[E][ ] eventtask (from: today to: next week)
+------------------------------
+> 
+------------------------------
+These are your current tasks:
+1. [T][ ] todotask
+2. [D][X] deadlinetask (by: tonight)
+3. [E][X] eventtask (from: today to: next week)
+------------------------------
+> 
+------------------------------
+I will mark this as undone for now:
+	[E][X] eventtask (from: today to: next week)
+------------------------------
+> 
+------------------------------
+Noted with thanks. I have removed the task:
+	[T][ ] todotask
+Now you are left with 2 tasks.
+------------------------------
+> 
+------------------------------
+These are your current tasks:
+1. [D][X] deadlinetask (by: tonight)
+2. [E][ ] eventtask (from: today to: next week)
+------------------------------
+> 
+------------------------------
+Unknown command! Did you spell it wrongly?
+------------------------------
+> 
+------------------------------
+Task was not setup properly! Ensure the parameters are correct! 
+Valid task commands: 
+	todo <name> 
+	deadline <name> /by <datetime> 
+	event <name> /from <datetime> /to <datetime>
+------------------------------
+> 
+------------------------------
+Task was not setup properly! Ensure the parameters are correct! 
+Valid task commands: 
+	todo <name> 
+	deadline <name> /by <datetime> 
+	event <name> /from <datetime> /to <datetime>
+------------------------------
+> 
+------------------------------
+These are your current tasks:
+1. [D][X] deadlinetask (by: tonight)
+2. [E][ ] eventtask (from: today to: next week)
+------------------------------
+> 
+------------------------------
+Goodbye! It was a nice chat! :)
+------------------------------
+                                                
+                              ▄▄                
+                              ██           ██   
+▀▀▀██ ▄█▀█▄ ████▄ ▄█▀█▄ ████▄ ████▄ ▄███▄ ▀██▀▀ 
+  ▄█▀ ██▄█▀ ██ ██ ██▄█▀ ██ ▀▀ ██ ██ ██ ██  ██   
+▄██▄▄ ▀█▄▄▄ ██ ██ ▀█▄▄▄ ██    ████▀ ▀███▀  ██   
+                                                
+                                                
+Isaac Goh

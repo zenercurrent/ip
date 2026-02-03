@@ -11,7 +11,9 @@ public class Zenerbot {
     /** Processes the command given to the bot */
     private static void process(String command) {
         String instruction = command.strip().split(" ")[0];
-        String parameters = command.replaceFirst(instruction + " ", "");
+        String parameters = command.length() > instruction.length()
+                ? command.replaceFirst(instruction + " ", "")
+                : "";
 
         switch (instruction) {
         // bye: exit program
@@ -87,7 +89,7 @@ public class Zenerbot {
         case "delete" -> {
             int i = Integer.parseInt(parameters);   // todo: handle possible exception here
             Task task = tasks.get(i - 1);
-            tasks.remove(i);
+            tasks.remove(i - 1);
             System.out.println("Noted with thanks. I have removed the task:");
             System.out.println("\t" + task);
             System.out.println("Now you are left with " + tasks.size() + " tasks.");
@@ -114,9 +116,9 @@ public class Zenerbot {
         System.out.println("How can I help?");
         System.out.println("------------------------------");
 
-        while (!canExit) {
+        Scanner scan = new Scanner(System.in);
+        while (!canExit && scan.hasNextLine()) {
             System.out.println("> ");
-            Scanner scan = new Scanner(System.in);
             String command = scan.nextLine();
             System.out.println("------------------------------");
             try {
