@@ -20,3 +20,10 @@ java -classpath ..\bin Zenerbot < input.txt > ACTUAL.TXT
 
 REM compare the output to the expected output
 FC ACTUAL.TXT EXPECTED.TXT
+
+REM auto-replace expected output based on new input (added by isaac)
+SET /P replace="Replace expected output with current actual? (y/n) "
+IF "%replace%" == "y" (
+    ECHO "Replacing expected output."
+    COPY ACTUAL.TXT EXPECTED.TXT
+)
