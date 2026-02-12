@@ -2,26 +2,48 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Zenerbot {
+    /** The singleton instance of the bot */
+    private static Zenerbot BOT;
+
     /** A collection of saved tasks */
     private static final ArrayList<Task> tasks = new ArrayList<>();
 
-    /** Flag that allows the bot to terminate */
-    private static boolean canExit = false;
+    /** The welcome logo of Zenerbot! */
+    public static final String LOGO =
+                                                               """
+                                                               \s
+                                              ▄▄               \s
+                                              ██           ██  \s
+                ▀▀▀██ ▄█▀█▄ ████▄ ▄█▀█▄ ████▄ ████▄ ▄███▄ ▀██▀▀\s
+                  ▄█▀ ██▄█▀ ██ ██ ██▄█▀ ██ ▀▀ ██ ██ ██ ██  ██  \s
+                ▄██▄▄ ▀█▄▄▄ ██ ██ ▀█▄▄▄ ██    ████▀ ▀███▀  ██  \s
+                                                               \s
+                                                               \s""";
+
+    private Zenerbot() {
+    }
+
+    /**
+     * Gets the singleton instance of the bot.
+     * <a href="https://www.baeldung.com/java-singleton">see Java Singleton</a>
+     *
+     * @return the bot instance
+     */
+    public static Zenerbot getInstance() {
+        if (BOT == null) {
+            BOT = new Zenerbot();
+        }
+        return BOT;
+    }
 
     /** Processes the command given to the bot */
-    private static void process(String command) {
+    public void process(String command) {
         String instruction = command.strip().split(" ")[0];
         String parameters = command.length() > instruction.length()
                 ? command.replaceFirst(instruction + " ", "")
                 : "";
 
         switch (instruction) {
-        // bye: exit program
-        case "bye" -> {
-            System.out.println("Goodbye! It was a nice chat! :)");
-            canExit = true;
-        }
-
         // list: display all tasks
         case "list" -> {
             System.out.println("These are your current tasks:");
@@ -100,27 +122,21 @@ public class Zenerbot {
         }
     }
 
-    public static void main(String[] args) {
-        String logo = """
-                                                               \s
-                                              ▄▄               \s
-                                              ██           ██  \s
-                ▀▀▀██ ▄█▀█▄ ████▄ ▄█▀█▄ ████▄ ████▄ ▄███▄ ▀██▀▀\s
-                  ▄█▀ ██▄█▀ ██ ██ ██▄█▀ ██ ▀▀ ██ ██ ██ ██  ██  \s
-                ▄██▄▄ ▀█▄▄▄ ██ ██ ▀█▄▄▄ ██    ████▀ ▀███▀  ██  \s
-                                                               \s
-                                                               \s""";
-        System.out.println(logo);
+    /** Starts and runs the bot loop. */
+    public void run() {
+        System.out.println(Zenerbot.LOGO);
         System.out.println("------------------------------");
         System.out.println("Hello there! I am ZenerBot, your personal assistant.");
         System.out.println("How can I help?");
         System.out.println("------------------------------");
 
         Scanner scan = new Scanner(System.in);
-        while (!canExit && scan.hasNextLine()) {
+        // bot loop (continues until termination)
+        while (scan.hasNextLine()) {
             System.out.println("> ");
             String command = scan.nextLine();
             System.out.println("------------------------------");
+
             try {
                 process(command);
             } catch (UnknownCommandException | InvalidTaskException e) {
@@ -128,7 +144,12 @@ public class Zenerbot {
             }
             System.out.println("------------------------------");
         }
-        System.out.println(logo);
+    }
+
+    /** Terminates the bot. */
+    public void terminate() {
+        System.out.println(Zenerbot.LOGO);
         System.out.println("Isaac Goh");
+        System.exit(0);     // goodbye
     }
 }

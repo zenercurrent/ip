@@ -4,6 +4,7 @@
  */
 public abstract class Task {
     private String name;
+    private boolean isDone;
 
     public String getName() {
         return name;
@@ -20,8 +21,6 @@ public abstract class Task {
     public void setDone(boolean done) {
         isDone = done;
     }
-
-    private boolean isDone;
 
     /**
      * Instantiates a new Task.
