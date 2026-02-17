@@ -108,6 +108,8 @@ public class Zenerbot {
         System.out.println("------------------------------");
         System.out.println("Hello there! I am ZenerBot, your personal assistant.");
         System.out.println("How can I help?");
+
+        Command.LIST.execute(this, new String[]{}); // show list
         System.out.println("------------------------------");
 
         // bot loop (continues until termination)
@@ -121,7 +123,7 @@ public class Zenerbot {
     }
 
     /** Saves data to a location in a hard disk. Overwrites existing data! */
-    public void save() throws IOException {
+    public void save() {
         try (FileWriter file = new FileWriter(this.saveLocation);) {
             int i = 0;
             for (Task t : this.tasks) {
@@ -186,11 +188,7 @@ public class Zenerbot {
 
     /** Terminates the bot. */
     public void terminate() {
-        try {
-            this.save();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        this.save();    // just in case..
 
         System.out.println(Zenerbot.LOGO);
         System.out.println("Isaac Goh");

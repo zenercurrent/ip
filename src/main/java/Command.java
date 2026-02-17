@@ -40,12 +40,14 @@ public enum Command {
             ArrayList<Task> tasks = bot.getTasks();
             int i = Integer.parseInt(params[0]);
             Task task = tasks.get(i - 1);
+            task.setDone(true);
 
             if (!bot.isInit()) {
                 System.out.println("Good work. This task is done:");
                 System.out.println("\t" + task);
+
+                bot.save();
             }
-            task.setDone(true);
         }
 
         @Override
@@ -62,10 +64,12 @@ public enum Command {
             ArrayList<Task> tasks = bot.getTasks();
             int i = Integer.parseInt(params[0]);
             Task task = tasks.get(i - 1);
+            task.setDone(false);
 
             System.out.println("I will mark this as undone for now:");
             System.out.println("\t" + task);
-            task.setDone(false);
+
+            bot.save();
         }
     },
 
@@ -85,6 +89,8 @@ public enum Command {
                 System.out.println("I have created a new task for you:");
                 System.out.println("\t" + todo);
                 System.out.println("There are now " + tasks.size() + " task(s) to be done.");
+
+                bot.save();
             }
         }
 
@@ -113,6 +119,8 @@ public enum Command {
                 System.out.println("I have created a new task for you:");
                 System.out.println("\t" + deadline);
                 System.out.println("There are now " + tasks.size() + " task(s) to be done.");
+
+                bot.save();
             }
         }
 
@@ -143,6 +151,8 @@ public enum Command {
                 System.out.println("I have created a new task for you:");
                 System.out.println("\t" + event);
                 System.out.println("There are now " + tasks.size() + " task(s) to be done.");
+
+                bot.save();
             }
         }
 
