@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,6 +10,9 @@ public class Zenerbot {
 
     /** A collection of saved tasks */
     private final ArrayList<Task> tasks = new ArrayList<>();
+
+    /** The location in the hard disk that tasks are saved. Can be changed with commands.  */
+    private String saveLocation = "./data/zener.txt";
 
     /** The welcome logo of Zenerbot! */
     public static final String LOGO =
@@ -42,6 +48,22 @@ public class Zenerbot {
 
     /** Starts and runs the bot loop. */
     public void run() {
+        // pre-initialisation
+        System.out.println();
+        System.out.println("Zenerbot by Isaac Goh");
+        System.out.println();
+        System.out.println("Initialising bot...");
+
+        // loading from save file
+        System.out.println("Loading from previous save...");
+        try {
+            this.load();
+        } catch (IOException e) {
+            System.out.println("File was unable to be created due to an unknown reason.");
+            System.out.println("Loading unsuccessful.\n");
+        }
+
+        // intro
         System.out.println(Zenerbot.LOGO);
         System.out.println("------------------------------");
         System.out.println("Hello there! I am ZenerBot, your personal assistant.");
@@ -55,7 +77,6 @@ public class Zenerbot {
             System.out.println("------------------------------");
 
             try {
-//                process(command);
                 String instruction = cmd.strip().split(" ")[0];
                 String parameters = cmd.length() > instruction.length()
                         ? cmd.replaceFirst(instruction + " ", "")
@@ -67,6 +88,47 @@ public class Zenerbot {
                 System.out.println(e);
             }
             System.out.println("------------------------------");
+        }
+    }
+
+    /** Saves data to a location in a hard disk. Overwrites existing data! */
+    public void save() {
+
+    }
+
+    /**
+     * Loads data from a location in the hard disk. Done automatically on when bot starts.
+     *
+     * @throws IOException if file cannot be created
+     */
+    public void load() throws IOException {
+        File filePtr = new File(this.saveLocation);
+        Scanner file;
+        try {
+            file = new Scanner(filePtr);
+        } catch (FileNotFoundException e) {
+            // ask user for permission to create
+            System.out.println("Save file '" + this.saveLocation + "' does not exist!");
+            System.out.println("Could not load tasks...");
+            System.out.println("Create file in save location? (yes/no)");
+            Scanner scan = new Scanner(System.in);
+            if (scan.nextLine().equalsIgnoreCase("yes")) {
+                if (filePtr.getParentFile() != null) {
+                    filePtr.getParentFile().mkdirs();
+                }
+                if (filePtr.createNewFile()) {
+                    System.out.println("Save file created at: '" + filePtr.getAbsolutePath() + "'.");
+                } else {
+                    System.out.println("File actually already exists?? This shouldn't happen...");
+                }
+            }
+            file = new Scanner(filePtr);
+        }
+
+        System.out.println("Loading tasks...");
+        while (file.hasNextLine()) {
+            System.out.println(file.nextLine());
+            // just prints everything out for now
         }
     }
 

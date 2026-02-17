@@ -45,6 +45,12 @@ public enum Command {
             System.out.println("\t" + task);
             task.setDone(true);
         }
+
+        @Override
+        public boolean isScriptable() {
+            // to allow persistence of completed tasks
+            return true;
+        }
     },
 
     /** unmark: mark a task as not done */
@@ -76,6 +82,11 @@ public enum Command {
             System.out.println("\t" + todo);
             System.out.println("There are now " + tasks.size() + " task(s) to be done.");
         }
+
+        @Override
+        public boolean isScriptable() {
+            return true;
+        }
     },
 
     /** deadline: create a new deadline task */
@@ -95,6 +106,11 @@ public enum Command {
             System.out.println("I have created a new task for you:");
             System.out.println("\t" + deadline);
             System.out.println("There are now " + tasks.size() + " task(s) to be done.");
+        }
+
+        @Override
+        public boolean isScriptable() {
+            return true;
         }
     },
 
@@ -117,6 +133,11 @@ public enum Command {
             System.out.println("I have created a new task for you:");
             System.out.println("\t" + event);
             System.out.println("There are now " + tasks.size() + " task(s) to be done.");
+        }
+
+        @Override
+        public boolean isScriptable() {
+            return true;
         }
     },
 
@@ -157,4 +178,15 @@ public enum Command {
      * @param params the command parameters
      */
     abstract void execute(Zenerbot bot, String[] params);
+
+    /**
+     * <p>A command is considered <b>scriptable</b>
+     * if it is allowed to be executed by reading and parsing from a text file.</p>
+     * <p>It is set to <i>false</i> by default.</p>
+     *
+     * @return whether the command is scriptable
+     */
+    public boolean isScriptable() {
+        return false;
+    }
 }
