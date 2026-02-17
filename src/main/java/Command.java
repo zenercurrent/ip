@@ -40,10 +40,20 @@ public enum Command {
             ArrayList<Task> tasks = bot.getTasks();
             int i = Integer.parseInt(params[0]);
             Task task = tasks.get(i - 1);
-
-            System.out.println("Good work. This task is done:");
-            System.out.println("\t" + task);
             task.setDone(true);
+
+            if (!bot.isInit()) {
+                System.out.println("Good work. This task is done:");
+                System.out.println("\t" + task);
+
+                bot.save();
+            }
+        }
+
+        @Override
+        public boolean isScriptable() {
+            // to allow persistence of completed tasks
+            return true;
         }
     },
 
@@ -54,10 +64,12 @@ public enum Command {
             ArrayList<Task> tasks = bot.getTasks();
             int i = Integer.parseInt(params[0]);
             Task task = tasks.get(i - 1);
+            task.setDone(false);
 
             System.out.println("I will mark this as undone for now:");
             System.out.println("\t" + task);
-            task.setDone(false);
+
+            bot.save();
         }
     },
 
@@ -72,9 +84,19 @@ public enum Command {
             ArrayList<Task> tasks = bot.getTasks();
             Todo todo = new Todo(String.join(" ", params));
             tasks.add(todo);
-            System.out.println("I have created a new task for you:");
-            System.out.println("\t" + todo);
-            System.out.println("There are now " + tasks.size() + " task(s) to be done.");
+
+            if (!bot.isInit()) {
+                System.out.println("I have created a new task for you:");
+                System.out.println("\t" + todo);
+                System.out.println("There are now " + tasks.size() + " task(s) to be done.");
+
+                bot.save();
+            }
+        }
+
+        @Override
+        public boolean isScriptable() {
+            return true;
         }
     },
 
@@ -92,9 +114,19 @@ public enum Command {
             String by = String.join(" ", Arrays.copyOfRange(params, b + 1, params.length));
             Deadline deadline = new Deadline(name, by);
             tasks.add(deadline);
-            System.out.println("I have created a new task for you:");
-            System.out.println("\t" + deadline);
-            System.out.println("There are now " + tasks.size() + " task(s) to be done.");
+
+            if (!bot.isInit()) {
+                System.out.println("I have created a new task for you:");
+                System.out.println("\t" + deadline);
+                System.out.println("There are now " + tasks.size() + " task(s) to be done.");
+
+                bot.save();
+            }
+        }
+
+        @Override
+        public boolean isScriptable() {
+            return true;
         }
     },
 
@@ -114,9 +146,19 @@ public enum Command {
             String to = String.join(" ", Arrays.copyOfRange(params, t + 1, params.length));
             Event event = new Event(name, from, to);
             tasks.add(event);
-            System.out.println("I have created a new task for you:");
-            System.out.println("\t" + event);
-            System.out.println("There are now " + tasks.size() + " task(s) to be done.");
+
+            if (!bot.isInit()) {
+                System.out.println("I have created a new task for you:");
+                System.out.println("\t" + event);
+                System.out.println("There are now " + tasks.size() + " task(s) to be done.");
+
+                bot.save();
+            }
+        }
+
+        @Override
+        public boolean isScriptable() {
+            return true;
         }
     },
 
@@ -157,4 +199,15 @@ public enum Command {
      * @param params the command parameters
      */
     abstract void execute(Zenerbot bot, String[] params);
+
+    /**
+     * <p>A command is considered <b>scriptable</b>
+     * if it is allowed to be executed through parsing from a text file.</p>
+     * <p>It is set to <i>false</i> by default.</p>
+     *
+     * @return whether the command is scriptable
+     */
+    public boolean isScriptable() {
+        return false;
+    }
 }

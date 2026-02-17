@@ -33,6 +33,13 @@ public abstract class Task {
         isDone = false;
     }
 
+    /**
+     * Gets the string command used to create this task.
+     *
+     * @return the string command
+     */
+    public abstract String toCommandString();
+
     @Override
     public String toString() {
         return "[" + (this.isDone ? "X" : " ") + "] " + this.name;
