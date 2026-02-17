@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -92,8 +93,21 @@ public class Zenerbot {
     }
 
     /** Saves data to a location in a hard disk. Overwrites existing data! */
-    public void save() {
+    public void save() throws IOException {
+        try (FileWriter file = new FileWriter(this.saveLocation);) {
+            int i = 0;
+            for (Task t : this.tasks) {
+                i++;
+                file.write(t.toCommandString() + "\n");
+                if (t.isDone()) {
+                    file.write("mark " + i + "\n");
+                }
+            }
 
+        } catch (IOException e) {
+            System.out.println("Save file could not be opened/created due to an unknown error.");
+            System.out.println("Save failed!");
+        }
     }
 
     /**
@@ -134,6 +148,12 @@ public class Zenerbot {
 
     /** Terminates the bot. */
     public void terminate() {
+        try {
+            this.save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         System.out.println(Zenerbot.LOGO);
         System.out.println("Isaac Goh");
         System.exit(0);     // goodbye
