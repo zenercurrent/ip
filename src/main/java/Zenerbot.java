@@ -9,6 +9,9 @@ public class Zenerbot {
     /** The singleton instance of the bot */
     private static Zenerbot BOT;
 
+    /** Used by the bot to indicate if it is still initialising. (true if yes) */
+    private static boolean INIT_MODE = true;
+
     /** A collection of saved tasks */
     private final ArrayList<Task> tasks = new ArrayList<>();
 
@@ -47,9 +50,44 @@ public class Zenerbot {
         return this.tasks;
     }
 
+    public boolean isInit() {
+        return Zenerbot.INIT_MODE;
+    }
+
+    /**
+     * Parses the raw string command into an executable Command object <b>and executes it</b>.
+     * Deals with exceptions caused by invalid commands or wrong usage.
+     *
+     * @param raw the raw command string
+     * @return true if success, false otherwise
+     */
+    public boolean exec(String raw) {
+        Command command;
+        try {
+            String instruction = raw.strip().split(" ")[0];
+            String parameters = raw.length() > instruction.length()
+                    ? raw.replaceFirst(instruction + " ", "")
+                    : "";
+            command = Command.fromString(instruction);
+            if (!INIT_MODE || command.isScriptable()) {
+                command.execute(Zenerbot.getInstance(), parameters.split(" "));
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (UnknownCommandException | InvalidTaskException e) {
+            if (!INIT_MODE) {
+                System.out.println(e);
+            }
+            return false;
+        }
+    }
+
     /** Starts and runs the bot loop. */
     public void run() {
         // pre-initialisation
+        Zenerbot.INIT_MODE = true;
         System.out.println();
         System.out.println("Zenerbot by Isaac Goh");
         System.out.println();
@@ -65,29 +103,19 @@ public class Zenerbot {
         }
 
         // intro
+        Zenerbot.INIT_MODE = false;
         System.out.println(Zenerbot.LOGO);
         System.out.println("------------------------------");
         System.out.println("Hello there! I am ZenerBot, your personal assistant.");
         System.out.println("How can I help?");
         System.out.println("------------------------------");
 
-        Scanner scan = new Scanner(System.in);
         // bot loop (continues until termination)
+        Scanner scan = new Scanner(System.in);
         while (scan.hasNextLine()) {
             String cmd = scan.nextLine();
             System.out.println("------------------------------");
-
-            try {
-                String instruction = cmd.strip().split(" ")[0];
-                String parameters = cmd.length() > instruction.length()
-                        ? cmd.replaceFirst(instruction + " ", "")
-                        : "";
-                Command command = Command.fromString(instruction);
-                command.execute(Zenerbot.getInstance(), parameters.split(" "));
-
-            } catch (UnknownCommandException | InvalidTaskException e) {
-                System.out.println(e);
-            }
+            exec(cmd);  // parses and executes
             System.out.println("------------------------------");
         }
     }
@@ -139,11 +167,21 @@ public class Zenerbot {
             file = new Scanner(filePtr);
         }
 
-        System.out.println("Loading tasks...");
+        int failures = 0;
         while (file.hasNextLine()) {
-            System.out.println(file.nextLine());
-            // just prints everything out for now
+            String cmd = file.nextLine();
+            boolean success = exec(cmd);
+            if (!success) {
+                System.out.println("Failed at: '" + cmd + "'");
+                failures++;
+            }
         }
+
+        System.out.println("Load completed!");
+        if (failures > 0) {
+            System.out.println("Failed to import " + failures + " line(s).");
+        }
+        System.out.println("Loaded " + this.tasks.size() + " task(s) successfully.");
     }
 
     /** Terminates the bot. */
