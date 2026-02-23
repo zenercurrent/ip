@@ -1,3 +1,7 @@
+package zener.tasks;
+
+import zener.tasks.Task;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -7,13 +11,13 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
 
-/** Event tasks start at a specific datetime and ends at a specific date/time. */
+/** zener.tasks.Event tasks start at a specific datetime and ends at a specific date/time. */
 public class Event extends Task {
     private final LocalDateTime from;
     private final LocalDateTime to;
 
     /**
-     * Instantiates a new Event task.
+     * Instantiates a new zener.tasks.Event task.
      *
      * @param name The name of the task
      * @param fromStr The datetime when the event starts (as string)

@@ -1,3 +1,5 @@
+package zener.exceptions;
+
 /**
  * Thrown when the task is invalid or is missing required parameters.
  */

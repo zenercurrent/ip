@@ -1,3 +1,5 @@
+package zener.tasks;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -7,12 +9,12 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
 
-/** Deadline tasks have a date/time associated to it. */
+/** zener.tasks.Deadline tasks have a date/time associated to it. */
 public class Deadline extends Task {
     private final LocalDateTime by;
 
     /**
-     * Instantiates a new Deadline task.
+     * Instantiates a new zener.tasks.Deadline task.
      *
      * @param name The name of the task
      * @param byStr The datetime when the task is due (as string)

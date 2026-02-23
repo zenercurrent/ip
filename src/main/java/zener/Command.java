@@ -1,8 +1,17 @@
+package zener;
+
+import zener.exceptions.InvalidTaskException;
+import zener.exceptions.UnknownCommandException;
+import zener.tasks.Deadline;
+import zener.tasks.Event;
+import zener.tasks.Task;
+import zener.tasks.Todo;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * A possible command that can be executed by Zenerbot.
+ * A possible command that can be executed by zener.Zenerbot.
  * Each command can expect parameters, but the base command is not case-sensitive.
  */
 public enum Command {
@@ -41,7 +50,7 @@ public enum Command {
             int i = Integer.parseInt(params[0]);
             // check out of bounds
             if (i > tasks.size()) {
-                bot.print("Task does not exist!");
+                bot.print("zener.tasks.Task does not exist!");
                 bot.print("There are only " + tasks.size() + " tasks in the list currently.");
                 return;
             }
