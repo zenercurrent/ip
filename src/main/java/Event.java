@@ -86,7 +86,7 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + this.from.format(this.formatter) + " to: " + this.to.format(this.formatter) + ")"
+        return "[E]" + super.toString() + " (from: " + this.from.format(this.formatter) + ", to: " + this.to.format(this.formatter) + ")"
                 + (this.to.isBefore(LocalDateTime.now()) ? " [expired!]" : "");
     }
 }

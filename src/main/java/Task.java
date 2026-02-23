@@ -1,6 +1,4 @@
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
 
 /**
  * A task created by the user.
@@ -11,7 +9,7 @@ public abstract class Task {
     private boolean isDone;
 
     /** Formatter for all tasks with date time displays */
-    protected final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm");
+    protected final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM ''yy HH:mm");
 
     public String getName() {
         return name;
