@@ -19,7 +19,6 @@ public class Deadline extends Task {
      */
     public Deadline(String name, String byStr) {
         super(name);
-        System.out.println("byStr = " + byStr);
 
         LocalDateTime dt;
         try {

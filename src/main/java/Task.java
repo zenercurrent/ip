@@ -11,7 +11,7 @@ public abstract class Task {
     private boolean isDone;
 
     /** Formatter for all tasks with date time displays */
-    protected final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
+    protected final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm");
 
     public String getName() {
         return name;
