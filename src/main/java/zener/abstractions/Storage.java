@@ -1,3 +1,9 @@
+package zener.abstractions;
+
+import zener.Zenerbot;
+import zener.tasks.Task;
+import zener.tasks.TaskList;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -15,9 +21,9 @@ public class Storage {
     }
 
     /**
-     * Loads data from a location in the hard disk to a specified TaskList.
+     * Loads data from a location in the hard disk to a specified zener.tasks.TaskList.
      *
-     * @param tasks the TaskList to be loaded
+     * @param tasks the zener.tasks.TaskList to be loaded
      * @throws IOException if file cannot be created
      */
     public void load(TaskList tasks) throws IOException {
@@ -62,10 +68,10 @@ public class Storage {
     }
 
     /**
-     * Saves data from a specified TaskList to a location in a hard disk.
+     * Saves data from a specified zener.tasks.TaskList to a location in a hard disk.
      * Overwrites existing data!
      *
-     * @param tasks the TaskList to save from
+     * @param tasks the zener.tasks.TaskList to save from
      */
     public void save(TaskList tasks) {
         try (FileWriter file = new FileWriter(this.saveLocation);) {

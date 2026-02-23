@@ -1,9 +1,19 @@
+package zener;
+
+import zener.abstractions.Parser;
+import zener.abstractions.Storage;
+import zener.abstractions.Ui;
+import zener.exceptions.InvalidTaskException;
+import zener.exceptions.UnknownCommandException;
+import zener.tasks.Task;
+import zener.tasks.TaskList;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * The type Zenerbot.
+ * The type zener.Zenerbot.
  */
 public class Zenerbot {
     /** The singleton instance of the bot */
@@ -17,7 +27,7 @@ public class Zenerbot {
     private final Parser parser;
     private final Ui ui;
 
-    /** The welcome logo of Zenerbot! */
+    /** The welcome logo of zener.Zenerbot! */
     public static final String LOGO =
                                                                """
                                                                \s
@@ -68,7 +78,7 @@ public class Zenerbot {
     }
 
     /**
-     * Saves the current tasks to Storage.
+     * Saves the current tasks to zener.abstractions.Storage.
      */
     public void save() {
         this.storage.save(this.tasks);
@@ -84,7 +94,7 @@ public class Zenerbot {
     }
 
     /**
-     * Parses the raw string command into an executable Command object <b>and executes it</b>.
+     * Parses the raw string command into an executable zener.Command object <b>and executes it</b>.
      * Deals with exceptions caused by invalid commands or wrong usage.
      *
      * @param raw the raw command string
@@ -115,7 +125,7 @@ public class Zenerbot {
     public void run() {
         // pre-initialisation
         Zenerbot.INIT_MODE = true;
-        ui.consoleMessage("Zenerbot by Isaac Goh\n");
+        ui.consoleMessage("zener.Zenerbot by Isaac Goh\n");
         ui.consoleMessage("Initialising bot...\n");
 
         // loading from save file

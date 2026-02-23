@@ -1,4 +1,6 @@
-import java.util.Scanner;
+package zener.abstractions;
+
+import zener.Zenerbot;
 
 /**
  * Handles the interactions and display with user. Including displaying of messages, errors, etc..

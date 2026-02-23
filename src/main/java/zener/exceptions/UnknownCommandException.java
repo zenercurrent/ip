@@ -1,3 +1,5 @@
+package zener.exceptions;
+
 /**
  * Thrown when command is not known by the bot.
  */
