@@ -50,7 +50,7 @@ public enum Command {
             int i = Integer.parseInt(params[0]);
             // check out of bounds
             if (i > tasks.size()) {
-                bot.print("zener.tasks.Task does not exist!");
+                bot.print("Task does not exist!");
                 bot.print("There are only " + tasks.size() + " tasks in the list currently.");
                 return;
             }
@@ -79,6 +79,13 @@ public enum Command {
         void execute(Zenerbot bot, String[] params) {
             ArrayList<Task> tasks = bot.getTasks();
             int i = Integer.parseInt(params[0]);
+            // check out of bounds
+            if (i > tasks.size()) {
+                bot.print("Task does not exist!");
+                bot.print("There are only " + tasks.size() + " tasks in the list currently.");
+                return;
+            }
+
             Task task = tasks.get(i - 1);
             task.setDone(false);
 
@@ -183,12 +190,43 @@ public enum Command {
         @Override
         void execute(Zenerbot bot, String[] params) {
             ArrayList<Task> tasks = bot.getTasks();
-            int i = Integer.parseInt(params[0]);   // todo: handle possible exception here
+            int i = Integer.parseInt(params[0]);
+            // check out of bounds
+            if (i > tasks.size()) {
+                bot.print("Task does not exist!");
+                bot.print("There are only " + tasks.size() + " tasks in the list currently.");
+                return;
+            }
+
             Task task = tasks.get(i - 1);
             tasks.remove(i - 1);
             bot.print("Noted with thanks. I have removed the task:");
             bot.print("\t" + task);
             bot.print("Now you are left with " + tasks.size() + " tasks.");
+        }
+    },
+
+    FIND {
+        @Override
+        void execute(Zenerbot bot, String[] params) {
+            String search = String.join(" ", params);
+            ArrayList<Task> tasks = bot.getTasks();
+            ArrayList<Task> found = new ArrayList<>();
+
+            for (Task t : tasks) {
+                if (t.getName().contains(search)) {
+                    found.add(t);
+                }
+            }
+            if (found.size() == 0) {
+                bot.print("No relevant tasks were found.");
+                return;
+            }
+
+            bot.print("These task(s) match your request:");
+            for (int i = 0; i < found.size(); i++) {
+                bot.print(i + 1 + ". " + found.get(i));
+            }
         }
     };
 
@@ -216,12 +254,6 @@ public enum Command {
      */
     abstract void execute(Zenerbot bot, String[] params);
 
-//    /**
-//     * Gets the instructions and syntax of the command.
-//     *
-//     * @return the command instructions
-//     */
-//    abstract String getManual();
 
     /**
      * <p>A command is considered <b>scriptable</b>
