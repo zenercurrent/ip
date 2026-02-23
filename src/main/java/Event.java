@@ -81,7 +81,7 @@ public class Event extends Task {
 
     @Override
     public String toCommandString() {
-        return "event " + this.getName() + " /from " + this.from.format(this.formatter) + " /to " + this.to.format(this.formatter);
+        return "event " + this.getName() + " /from " + this.from.format(this.formatterCmd) + " /to " + this.to.format(this.formatterCmd);
     }
 
     @Override

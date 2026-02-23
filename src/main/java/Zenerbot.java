@@ -1,10 +1,10 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The type Zenerbot.
+ */
 public class Zenerbot {
     /** The singleton instance of the bot */
     private static Zenerbot BOT;
@@ -12,11 +12,10 @@ public class Zenerbot {
     /** Used by the bot to indicate if it is still initialising. (true if yes) */
     private static boolean INIT_MODE = true;
 
-    /** A collection of saved tasks */
-    private final ArrayList<Task> tasks = new ArrayList<>();
-
-    /** The location in the hard disk that tasks are saved. Can be changed with commands.  */
-    private String saveLocation = "./data/zener.txt";
+    private final TaskList tasks;
+    private final Storage storage;
+    private final Parser parser;
+    private final Ui ui;
 
     /** The welcome logo of Zenerbot! */
     public static final String LOGO =
@@ -31,6 +30,10 @@ public class Zenerbot {
                                                                \s""";
 
     private Zenerbot() {
+        this.tasks = new TaskList();
+        this.storage = new Storage("./data/zener.txt");
+        this.parser = new Parser();
+        this.ui = new Ui();
     }
 
     /**
@@ -46,12 +49,38 @@ public class Zenerbot {
         return BOT;
     }
 
+    /**
+     * Gets tasks.
+     *
+     * @return the tasks
+     */
     public ArrayList<Task> getTasks() {
         return this.tasks;
     }
 
+    /**
+     * Is init boolean.
+     *
+     * @return the boolean
+     */
     public boolean isInit() {
         return Zenerbot.INIT_MODE;
+    }
+
+    /**
+     * Saves the current tasks to Storage.
+     */
+    public void save() {
+        this.storage.save(this.tasks);
+    }
+
+    /**
+     * Prints the given msg using the UI abstraction.
+     *
+     * @param msg the message to send
+     */
+    public void print(String msg) {
+        this.ui.consoleMessage(msg);
     }
 
     /**
@@ -64,13 +93,11 @@ public class Zenerbot {
     public boolean exec(String raw) {
         Command command;
         try {
-            String instruction = raw.strip().split(" ")[0];
-            String parameters = raw.length() > instruction.length()
-                    ? raw.replaceFirst(instruction + " ", "")
-                    : "";
-            command = Command.fromString(instruction);
+            command = parser.getCommand(raw);
+            System.out.println("command = " + command);
+            String[] parameters = parser.getParameters(raw);
             if (!INIT_MODE || command.isScriptable()) {
-                command.execute(Zenerbot.getInstance(), parameters.split(" "));
+                command.execute(Zenerbot.getInstance(), parameters);
                 return true;
             } else {
                 return false;
@@ -78,7 +105,7 @@ public class Zenerbot {
 
         } catch (UnknownCommandException | InvalidTaskException e) {
             if (!INIT_MODE) {
-                System.out.println(e);
+                ui.consoleError(e.getMessage());
             }
             return false;
         }
@@ -88,110 +115,40 @@ public class Zenerbot {
     public void run() {
         // pre-initialisation
         Zenerbot.INIT_MODE = true;
-        System.out.println();
-        System.out.println("Zenerbot by Isaac Goh");
-        System.out.println();
-        System.out.println("Initialising bot...");
+        ui.consoleMessage("Zenerbot by Isaac Goh\n");
+        ui.consoleMessage("Initialising bot...\n");
 
         // loading from save file
-        System.out.println("Loading from previous save...");
+        ui.consoleMessage("Loading from previous save...");
         try {
-            this.load();
+            storage.load(this.tasks);
         } catch (IOException e) {
-            System.out.println("File was unable to be created due to an unknown reason.");
-            System.out.println("Loading unsuccessful.\n");
+            ui.consoleError("File was unable to be created due to an unknown reason.");
+            ui.consoleError("Loading unsuccessful.\n");
         }
 
         // intro
         Zenerbot.INIT_MODE = false;
-        System.out.println(Zenerbot.LOGO);
-        System.out.println("------------------------------");
-        System.out.println("Hello there! I am ZenerBot, your personal assistant.");
-        System.out.println("How can I help?");
+        ui.welcomeMessage();
 
         Command.LIST.execute(this, new String[]{}); // show list
-        System.out.println("------------------------------");
+        ui.divider();
 
         // bot loop (continues until termination)
         Scanner scan = new Scanner(System.in);
         while (scan.hasNextLine()) {
             String cmd = scan.nextLine();
-            System.out.println("------------------------------");
+            ui.divider();
             exec(cmd);  // parses and executes
-            System.out.println("------------------------------");
+            ui.divider();
         }
-    }
-
-    /** Saves data to a location in a hard disk. Overwrites existing data! */
-    public void save() {
-        try (FileWriter file = new FileWriter(this.saveLocation);) {
-            int i = 0;
-            for (Task t : this.tasks) {
-                i++;
-                file.write(t.toCommandString() + "\n");
-                if (t.isDone()) {
-                    file.write("mark " + i + "\n");
-                }
-            }
-
-        } catch (IOException e) {
-            System.out.println("Save file could not be opened/created due to an unknown error.");
-            System.out.println("Save failed!");
-        }
-    }
-
-    /**
-     * Loads data from a location in the hard disk. Done automatically on when bot starts.
-     *
-     * @throws IOException if file cannot be created
-     */
-    public void load() throws IOException {
-        File filePtr = new File(this.saveLocation);
-        Scanner file;
-        try {
-            file = new Scanner(filePtr);
-        } catch (FileNotFoundException e) {
-            // ask user for permission to create
-            System.out.println("Save file '" + this.saveLocation + "' does not exist!");
-            System.out.println("Could not load tasks...");
-            System.out.println("Create file in save location? (yes/no)");
-            Scanner scan = new Scanner(System.in);
-            if (scan.nextLine().equalsIgnoreCase("yes")) {
-                if (filePtr.getParentFile() != null) {
-                    filePtr.getParentFile().mkdirs();
-                }
-                if (filePtr.createNewFile()) {
-                    System.out.println("Save file created at: '" + filePtr.getAbsolutePath() + "'.");
-                } else {
-                    System.out.println("File actually already exists?? This shouldn't happen...");
-                }
-            }
-            file = new Scanner(filePtr);
-        }
-
-        int failures = 0;
-        while (file.hasNextLine()) {
-            String cmd = file.nextLine();
-            boolean success = exec(cmd);
-            if (!success) {
-                System.out.println("Failed at: '" + cmd + "'");
-                failures++;
-            }
-        }
-
-        System.out.println("Load completed!");
-        if (failures > 0) {
-            System.out.println("Failed to import " + failures + " line(s).");
-        }
-        System.out.println("Loaded " + this.tasks.size() + " task(s) successfully.");
     }
 
     /** Terminates the bot. */
     public void terminate() {
         this.save();    // just in case..
 
-        System.out.println(Zenerbot.LOGO);
-        System.out.println("Isaac Goh");
+        ui.goodbyeMessage();
         System.exit(0);     // goodbye
     }
 }
