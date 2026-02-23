@@ -1,5 +1,7 @@
 package zener.tasks;
 
+import zener.exceptions.InvalidTaskException;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -13,6 +15,10 @@ import java.time.temporal.TemporalAccessor;
 public class Deadline extends Task {
     private final LocalDateTime by;
 
+    public LocalDateTime getBy() {
+        return by;
+    }
+
     /**
      * Instantiates a new zener.tasks.Deadline task.
      *
@@ -21,6 +27,9 @@ public class Deadline extends Task {
      */
     public Deadline(String name, String byStr) {
         super(name);
+        if (name.strip().length() == 0) {
+            throw new InvalidTaskException();
+        }
 
         LocalDateTime dt;
         try {

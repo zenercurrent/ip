@@ -1,5 +1,6 @@
 package zener.tasks;
 
+import zener.exceptions.InvalidTaskException;
 import zener.tasks.Task;
 
 import java.time.LocalDate;
@@ -25,6 +26,9 @@ public class Event extends Task {
      */
     public Event(String name, String fromStr, String toStr) {
         super(name);
+        if (name.strip().length() == 0) {
+            throw new InvalidTaskException();
+        }
 
         LocalDateTime dtFrom, dtTo;
         try {

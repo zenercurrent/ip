@@ -121,7 +121,7 @@ public enum Command {
         @Override
         void execute(Zenerbot bot, String[] params) {
             int b = Arrays.asList(params).indexOf("/by");
-            if (b == -1 || b == params.length - 1) {
+            if (b == 1 || b == -1 || b == params.length - 1) {
                 throw new InvalidTaskException();
             }
 
@@ -152,7 +152,7 @@ public enum Command {
         void execute(Zenerbot bot, String[] params) {
             int f = Arrays.asList(params).indexOf("/from");
             int t = Arrays.asList(params).indexOf("/to");
-            if (f == -1 || f == params.length - 1 || t == -1 || t == params.length - 1 || t - f <= 1) {
+            if (f == 1 || f == -1 || f == params.length - 1 || t == -1 || t == params.length - 1 || t - f <= 1) {
                 throw new InvalidTaskException();
             }
 

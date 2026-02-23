@@ -1,5 +1,7 @@
 package zener.tasks;
 
+import zener.exceptions.InvalidTaskException;
+
 /** ToDo tasks do not have any date/time attached to it */
 public class Todo extends Task {
     /**
@@ -9,6 +11,9 @@ public class Todo extends Task {
      */
     public Todo(String name) {
         super(name);
+        if (name.strip().length() == 0) {
+            throw new InvalidTaskException();
+        }
     }
 
     @Override

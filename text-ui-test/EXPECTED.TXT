@@ -66,14 +66,14 @@ These are your current tasks:
 Unknown command! Did you spell it wrongly?
 ------------------------------
 ------------------------------
-Task was not setup properly! Ensure the parameters are correct! 
+Task was not setup properly! Ensure the parameters are correct!
 Valid task commands: 
 	todo <name> 
 	deadline <name> /by <datetime> 
 	event <name> /from <datetime> /to <datetime>
 ------------------------------
 ------------------------------
-Task was not setup properly! Ensure the parameters are correct! 
+Task was not setup properly! Ensure the parameters are correct!
 Valid task commands: 
 	todo <name> 
 	deadline <name> /by <datetime> 
