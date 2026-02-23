@@ -69,7 +69,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + this.by.format(this.formatter) + ")"
-                + (this.by.isBefore(LocalDateTime.now()) ? " [expired!]" : "");
+        return "[D]" + super.toString() + " (by: " + this.by.format(this.formatter) + ")" +
+                (this.by.isBefore(LocalDateTime.now()) ? " [expired!]" : "");
     }
 }
