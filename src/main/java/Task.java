@@ -1,3 +1,7 @@
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
+
 /**
  * A task created by the user.
  * Can be marked as done.
@@ -5,6 +9,9 @@
 public abstract class Task {
     private String name;
     private boolean isDone;
+
+    /** Formatter for all tasks with date time displays */
+    protected final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
 
     public String getName() {
         return name;
