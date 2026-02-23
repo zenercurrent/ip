@@ -47,6 +47,7 @@ public class Ui {
      * Displays an error message.
      */
     public void consoleError(String message) {
-        System.err.println(message);
+        // for now, no differentiation. could be different in the future.
+        System.out.println(message);
     }
 }

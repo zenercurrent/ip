@@ -11,7 +11,6 @@ public enum Command {
     BYE {
         @Override
         void execute(Zenerbot bot, String[] params) {
-            System.out.println("Goodbye! It was a nice chat! :)");
             bot.terminate();
         }
     },
@@ -22,13 +21,13 @@ public enum Command {
         void execute(Zenerbot bot, String[] params) {
             ArrayList<Task> tasks = bot.getTasks();
             if (tasks.size() == 0) {
-                System.out.println("No tasks today. Take a break!");
+                bot.print("No tasks today. Take a break!");
                 return;
             }
 
-            System.out.println("These are your current tasks:");
+            bot.print("These are your current tasks:");
             for (int i = 0; i < tasks.size(); i++) {
-                System.out.println(i + 1 + ". " + tasks.get(i));
+                bot.print(i + 1 + ". " + tasks.get(i));
             }
         }
     },
@@ -42,8 +41,8 @@ public enum Command {
             int i = Integer.parseInt(params[0]);
             // check out of bounds
             if (i > tasks.size()) {
-                System.out.println("Task does not exist!");
-                System.out.println("There are only " + tasks.size() + " tasks in the list currently.");
+                bot.print("Task does not exist!");
+                bot.print("There are only " + tasks.size() + " tasks in the list currently.");
                 return;
             }
 
@@ -51,8 +50,8 @@ public enum Command {
             task.setDone(true);
 
             if (!bot.isInit()) {
-                System.out.println("Good work. This task is done:");
-                System.out.println("\t" + task);
+                bot.print("Good work. This task is done:");
+                bot.print("\t" + task);
 
                 bot.save();
             }
@@ -74,8 +73,8 @@ public enum Command {
             Task task = tasks.get(i - 1);
             task.setDone(false);
 
-            System.out.println("I will mark this as undone for now:");
-            System.out.println("\t" + task);
+            bot.print("I will mark this as undone for now:");
+            bot.print("\t" + task);
 
             bot.save();
         }
@@ -94,9 +93,9 @@ public enum Command {
             tasks.add(todo);
 
             if (!bot.isInit()) {
-                System.out.println("I have created a new task for you:");
-                System.out.println("\t" + todo);
-                System.out.println("There are now " + tasks.size() + " task(s) to be done.");
+                bot.print("I have created a new task for you:");
+                bot.print("\t" + todo);
+                bot.print("There are now " + tasks.size() + " task(s) to be done.");
 
                 bot.save();
             }
@@ -124,9 +123,9 @@ public enum Command {
             tasks.add(deadline);
 
             if (!bot.isInit()) {
-                System.out.println("I have created a new task for you:");
-                System.out.println("\t" + deadline);
-                System.out.println("There are now " + tasks.size() + " task(s) to be done.");
+                bot.print("I have created a new task for you:");
+                bot.print("\t" + deadline);
+                bot.print("There are now " + tasks.size() + " task(s) to be done.");
 
                 bot.save();
             }
@@ -156,9 +155,9 @@ public enum Command {
             tasks.add(event);
 
             if (!bot.isInit()) {
-                System.out.println("I have created a new task for you:");
-                System.out.println("\t" + event);
-                System.out.println("There are now " + tasks.size() + " task(s) to be done.");
+                bot.print("I have created a new task for you:");
+                bot.print("\t" + event);
+                bot.print("There are now " + tasks.size() + " task(s) to be done.");
 
                 bot.save();
             }
@@ -178,9 +177,9 @@ public enum Command {
             int i = Integer.parseInt(params[0]);   // todo: handle possible exception here
             Task task = tasks.get(i - 1);
             tasks.remove(i - 1);
-            System.out.println("Noted with thanks. I have removed the task:");
-            System.out.println("\t" + task);
-            System.out.println("Now you are left with " + tasks.size() + " tasks.");
+            bot.print("Noted with thanks. I have removed the task:");
+            bot.print("\t" + task);
+            bot.print("Now you are left with " + tasks.size() + " tasks.");
         }
     };
 

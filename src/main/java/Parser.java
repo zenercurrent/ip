@@ -9,14 +9,9 @@ public class Parser {
      * @param raw the raw input string
      * @return the output Command, null if fail
      */
-    public Command getCommand(String raw) {
-        try {
-            String instruction = raw.strip().split(" ")[0];
-            return Command.fromString(instruction);
-        } catch (UnknownCommandException | InvalidTaskException e) {
-            System.out.println(e);
-            return null;
-        }
+    public Command getCommand(String raw) throws UnknownCommandException, InvalidTaskException {
+        String instruction = raw.strip().split(" ")[0];
+        return Command.fromString(instruction);
     }
 
     /**

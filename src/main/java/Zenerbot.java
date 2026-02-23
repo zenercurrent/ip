@@ -15,6 +15,7 @@ public class Zenerbot {
     private final TaskList tasks;
     private final Storage storage;
     private final Parser parser;
+    private final Ui ui;
 
     /** The welcome logo of Zenerbot! */
     public static final String LOGO =
@@ -32,6 +33,7 @@ public class Zenerbot {
         this.tasks = new TaskList();
         this.storage = new Storage("./data/zener.txt");
         this.parser = new Parser();
+        this.ui = new Ui();
     }
 
     /**
@@ -73,6 +75,15 @@ public class Zenerbot {
     }
 
     /**
+     * Prints the given msg using the UI abstraction.
+     *
+     * @param msg the message to send
+     */
+    public void print(String msg) {
+        this.ui.consoleMessage(msg);
+    }
+
+    /**
      * Parses the raw string command into an executable Command object <b>and executes it</b>.
      * Deals with exceptions caused by invalid commands or wrong usage.
      *
@@ -82,13 +93,11 @@ public class Zenerbot {
     public boolean exec(String raw) {
         Command command;
         try {
-            String instruction = raw.strip().split(" ")[0];
-            String parameters = raw.length() > instruction.length()
-                    ? raw.replaceFirst(instruction + " ", "")
-                    : "";
-            command = Command.fromString(instruction);
+            command = parser.getCommand(raw);
+            System.out.println("command = " + command);
+            String[] parameters = parser.getParameters(raw);
             if (!INIT_MODE || command.isScriptable()) {
-                command.execute(Zenerbot.getInstance(), parameters.split(" "));
+                command.execute(Zenerbot.getInstance(), parameters);
                 return true;
             } else {
                 return false;
@@ -96,7 +105,7 @@ public class Zenerbot {
 
         } catch (UnknownCommandException | InvalidTaskException e) {
             if (!INIT_MODE) {
-                System.out.println(e);
+                ui.consoleError(e.getMessage());
             }
             return false;
         }
@@ -106,37 +115,32 @@ public class Zenerbot {
     public void run() {
         // pre-initialisation
         Zenerbot.INIT_MODE = true;
-        System.out.println();
-        System.out.println("Zenerbot by Isaac Goh");
-        System.out.println();
-        System.out.println("Initialising bot...");
+        ui.consoleMessage("Zenerbot by Isaac Goh\n");
+        ui.consoleMessage("Initialising bot...\n");
 
         // loading from save file
-        System.out.println("Loading from previous save...");
+        ui.consoleMessage("Loading from previous save...");
         try {
             storage.load(this.tasks);
         } catch (IOException e) {
-            System.out.println("File was unable to be created due to an unknown reason.");
-            System.out.println("Loading unsuccessful.\n");
+            ui.consoleError("File was unable to be created due to an unknown reason.");
+            ui.consoleError("Loading unsuccessful.\n");
         }
 
         // intro
         Zenerbot.INIT_MODE = false;
-        System.out.println(Zenerbot.LOGO);
-        System.out.println("------------------------------");
-        System.out.println("Hello there! I am ZenerBot, your personal assistant.");
-        System.out.println("How can I help?");
+        ui.welcomeMessage();
 
         Command.LIST.execute(this, new String[]{}); // show list
-        System.out.println("------------------------------");
+        ui.divider();
 
         // bot loop (continues until termination)
         Scanner scan = new Scanner(System.in);
         while (scan.hasNextLine()) {
             String cmd = scan.nextLine();
-            System.out.println("------------------------------");
+            ui.divider();
             exec(cmd);  // parses and executes
-            System.out.println("------------------------------");
+            ui.divider();
         }
     }
 
@@ -144,8 +148,7 @@ public class Zenerbot {
     public void terminate() {
         this.save();    // just in case..
 
-        System.out.println(Zenerbot.LOGO);
-        System.out.println("Isaac Goh");
+        ui.goodbyeMessage();
         System.exit(0);     // goodbye
     }
 }
