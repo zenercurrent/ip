@@ -37,8 +37,16 @@ public enum Command {
     MARK {
         @Override
         void execute(Zenerbot bot, String[] params) {
+
             ArrayList<Task> tasks = bot.getTasks();
             int i = Integer.parseInt(params[0]);
+            // check out of bounds
+            if (i > tasks.size()) {
+                System.out.println("Task does not exist!");
+                System.out.println("There are only " + tasks.size() + " tasks in the list currently.");
+                return;
+            }
+
             Task task = tasks.get(i - 1);
             task.setDone(true);
 
@@ -199,6 +207,13 @@ public enum Command {
      * @param params the command parameters
      */
     abstract void execute(Zenerbot bot, String[] params);
+
+//    /**
+//     * Gets the instructions and syntax of the command.
+//     *
+//     * @return the command instructions
+//     */
+//    abstract String getManual();
 
     /**
      * <p>A command is considered <b>scriptable</b>

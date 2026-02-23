@@ -1,3 +1,5 @@
+import java.time.format.DateTimeFormatter;
+
 /**
  * A task created by the user.
  * Can be marked as done.
@@ -5,6 +7,9 @@
 public abstract class Task {
     private String name;
     private boolean isDone;
+
+    /** Formatter for all tasks with date time displays */
+    protected final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM ''yy HH:mm");
 
     public String getName() {
         return name;
