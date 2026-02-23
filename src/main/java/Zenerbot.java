@@ -1,10 +1,10 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The type Zenerbot.
+ */
 public class Zenerbot {
     /** The singleton instance of the bot */
     private static Zenerbot BOT;
@@ -12,11 +12,9 @@ public class Zenerbot {
     /** Used by the bot to indicate if it is still initialising. (true if yes) */
     private static boolean INIT_MODE = true;
 
-    /** A collection of saved tasks */
-    private final ArrayList<Task> tasks = new ArrayList<>();
-
-    /** The location in the hard disk that tasks are saved. Can be changed with commands.  */
-    private String saveLocation = "./data/zener.txt";
+    private final TaskList tasks;
+    private final Storage storage;
+    private final Parser parser;
 
     /** The welcome logo of Zenerbot! */
     public static final String LOGO =
@@ -31,6 +29,9 @@ public class Zenerbot {
                                                                \s""";
 
     private Zenerbot() {
+        this.tasks = new TaskList();
+        this.storage = new Storage("./data/zener.txt");
+        this.parser = new Parser();
     }
 
     /**
@@ -46,12 +47,29 @@ public class Zenerbot {
         return BOT;
     }
 
+    /**
+     * Gets tasks.
+     *
+     * @return the tasks
+     */
     public ArrayList<Task> getTasks() {
         return this.tasks;
     }
 
+    /**
+     * Is init boolean.
+     *
+     * @return the boolean
+     */
     public boolean isInit() {
         return Zenerbot.INIT_MODE;
+    }
+
+    /**
+     * Saves the current tasks to Storage.
+     */
+    public void save() {
+        this.storage.save(this.tasks);
     }
 
     /**
@@ -96,7 +114,7 @@ public class Zenerbot {
         // loading from save file
         System.out.println("Loading from previous save...");
         try {
-            this.load();
+            storage.load(this.tasks);
         } catch (IOException e) {
             System.out.println("File was unable to be created due to an unknown reason.");
             System.out.println("Loading unsuccessful.\n");

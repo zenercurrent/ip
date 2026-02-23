@@ -62,7 +62,7 @@ public class Deadline extends Task {
 
     @Override
     public String toCommandString() {
-        return "deadline " + this.getName() + " /by " + this.by.format(this.formatter);
+        return "deadline " + this.getName() + " /by " + this.by.format(this.formatterCmd);
     }
 
     @Override

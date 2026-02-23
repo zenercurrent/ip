@@ -10,6 +10,7 @@ public abstract class Task {
 
     /** Formatter for all tasks with date time displays */
     protected final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM ''yy HH:mm");
+    protected final DateTimeFormatter formatterCmd = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
 
     public String getName() {
         return name;
