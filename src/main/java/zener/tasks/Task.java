@@ -31,7 +31,7 @@ public abstract class Task {
     }
 
     /**
-     * Instantiates a new zener.tasks.Task.
+     * Instantiates a new Task.
      * The task is set as undone initially.
      *
      * @param name The name of the task
