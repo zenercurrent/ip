@@ -89,12 +89,14 @@ public class Event extends Task {
 
     @Override
     public String toCommandString() {
-        return "event " + this.getName() + " /from " + this.from.format(this.formatterCmd) + " /to " + this.to.format(this.formatterCmd);
+        return "event " + this.getName() + " /from " + this.from.format(this.formatterCmd) + " /to " +
+                this.to.format(this.formatterCmd);
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + this.from.format(this.formatter) + ", to: " + this.to.format(this.formatter) + ")"
-                + (this.to.isBefore(LocalDateTime.now()) ? " [expired!]" : "");
+        return "[E]" + super.toString() + " (from: " + this.from.format(this.formatter) + ", to: " +
+                this.to.format(this.formatter) + ")" +
+                (this.to.isBefore(LocalDateTime.now()) ? " [expired!]" : "");
     }
 }
