@@ -4,9 +4,10 @@ import zener.Command;
 import zener.exceptions.InvalidTaskException;
 import zener.exceptions.UnknownCommandException;
 
-/** Parses and understands the user input, and converts it to commands and parameters.
+/**
+ * Parses and understands the user input, and converts it to commands and parameters.
  * <p>
- *  Note: the implementation here is a bit trivial because most of the heavy lifting is done within the Command enum.
+ * Note: the implementation here is a bit trivial because most of the heavy lifting is done within the Command enum.
  */
 public class Parser {
     /**

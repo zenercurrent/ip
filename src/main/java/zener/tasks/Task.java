@@ -7,12 +7,22 @@ import java.time.format.DateTimeFormatter;
  * Can be marked as done.
  */
 public abstract class Task {
-    private String name;
-    private boolean isDone;
-
     /** Formatter for all tasks with date time displays */
     protected final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM ''yy HH:mm");
     protected final DateTimeFormatter formatterCmd = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+    private String name;
+    private boolean isDone;
+
+    /**
+     * Instantiates a new Task.
+     * The task is set as undone initially.
+     *
+     * @param name The name of the task
+     */
+    public Task(String name) {
+        this.name = name;
+        isDone = false;
+    }
 
     public String getName() {
         return name;
@@ -28,17 +38,6 @@ public abstract class Task {
 
     public void setDone(boolean done) {
         isDone = done;
-    }
-
-    /**
-     * Instantiates a new Task.
-     * The task is set as undone initially.
-     *
-     * @param name The name of the task
-     */
-    public Task(String name) {
-        this.name = name;
-        isDone = false;
     }
 
     /**

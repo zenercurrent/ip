@@ -8,7 +8,7 @@ import zener.Zenerbot;
  * Note: the whole point is to replace raw System.out/in and have an abstraction layer for UI instead.
  */
 public class Ui {
-    private final String DIVIDER = "------------------------------";
+    private static final String DIVIDER = "------------------------------";
 
     /**
      * Displays a divider (to separate outputs).

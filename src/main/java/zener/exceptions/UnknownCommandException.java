@@ -5,6 +5,9 @@ package zener.exceptions;
  */
 public class UnknownCommandException extends RuntimeException {
 
+    /**
+     * Instantiates a new unknown command exception.
+     */
     public UnknownCommandException() {
         super("Unknown command! Did you spell it wrongly?");
     }
