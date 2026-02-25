@@ -6,6 +6,9 @@ package zener.exceptions;
 public class InvalidTaskException extends RuntimeException {
     private final String message;
 
+    /**
+     * Instantiates a new invalid task exception.
+     */
     public InvalidTaskException() {
         this.message = """
                 Task was not setup properly! Ensure the parameters are correct!\s

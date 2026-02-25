@@ -1,7 +1,5 @@
 package zener.tasks;
 
-import zener.exceptions.InvalidTaskException;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -11,13 +9,11 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
 
+import zener.exceptions.InvalidTaskException;
+
 /** Deadline tasks have a date/time associated to it. */
 public class Deadline extends Task {
     private final LocalDateTime by;
-
-    public LocalDateTime getBy() {
-        return by;
-    }
 
     /**
      * Instantiates a new Deadline task.
@@ -37,14 +33,14 @@ public class Deadline extends Task {
             // defaults to 2359/today
             DateTimeFormatter formatter = new DateTimeFormatterBuilder()
                     .optionalStart()
-                        .appendPattern("d/M/yyyy")
-                        .optionalStart()
-                            .appendLiteral(' ')
-                            .appendPattern("HHmm")
-                        .optionalEnd()
+                    .appendPattern("d/M/yyyy")
+                    .optionalStart()
+                    .appendLiteral(' ')
+                    .appendPattern("HHmm")
+                    .optionalEnd()
                     .optionalEnd()
                     .optionalStart()
-                        .appendPattern("HHmm")
+                    .appendPattern("HHmm")
                     .optionalEnd()
                     .parseDefaulting(ChronoField.HOUR_OF_DAY, 23)
                     .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 59)
@@ -71,6 +67,10 @@ public class Deadline extends Task {
         this.by = dt;
     }
 
+    public LocalDateTime getBy() {
+        return by;
+    }
+
     @Override
     public String toCommandString() {
         return "deadline " + this.getName() + " /by " + this.by.format(this.formatterCmd);
@@ -78,7 +78,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + this.by.format(this.formatter) + ")" +
-                (this.by.isBefore(LocalDateTime.now()) ? " [expired!]" : "");
+        return "[D]" + super.toString() + " (by: " + this.by.format(this.formatter) + ")"
+                + (this.by.isBefore(LocalDateTime.now()) ? " [expired!]" : "");
     }
 }

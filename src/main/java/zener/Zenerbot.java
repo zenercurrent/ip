@@ -1,5 +1,9 @@
 package zener;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import zener.abstractions.Parser;
 import zener.abstractions.Storage;
 import zener.abstractions.Ui;
@@ -8,25 +12,14 @@ import zener.exceptions.UnknownCommandException;
 import zener.tasks.Task;
 import zener.tasks.TaskList;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
-
 /**
- * The type Zenerbot.
+ * The ZenerBot client.
+ * <p>
+ * Built based on the singleton pattern; use {@link #getInstance()} to get the instance,
+ * then use {@link #run()} to start the bot loop. Everything else (termination, command parsing, user input, etc.) is
+ * handled by the Zenerbot class.
  */
 public class Zenerbot {
-    /** The singleton instance of the bot */
-    private static Zenerbot BOT;
-
-    /** Used by the bot to indicate if it is still initialising. (true if yes) */
-    private static boolean INIT_MODE = true;
-
-    private final TaskList tasks;
-    private final Storage storage;
-    private final Parser parser;
-    private final Ui ui;
-
     /** The welcome logo of Zenerbot! */
     public static final String LOGO =
                                                                """
@@ -38,6 +31,18 @@ public class Zenerbot {
                 ▄██▄▄ ▀█▄▄▄ ██ ██ ▀█▄▄▄ ██    ████▀ ▀███▀  ██  \s
                                                                \s
                                                                \s""";
+
+    /** The singleton instance of the bot */
+    private static Zenerbot bot;
+
+    /** Used by the bot to indicate if it is still initialising. (true if yes) */
+    private static boolean initMode = true;
+
+    private final TaskList tasks;
+    private final Storage storage;
+    private final Parser parser;
+    private final Ui ui;
+
 
     private Zenerbot() {
         this.tasks = new TaskList();
@@ -53,28 +58,18 @@ public class Zenerbot {
      * @return the bot instance
      */
     public static Zenerbot getInstance() {
-        if (BOT == null) {
-            BOT = new Zenerbot();
+        if (bot == null) {
+            bot = new Zenerbot();
         }
-        return BOT;
+        return bot;
     }
 
-    /**
-     * Gets tasks.
-     *
-     * @return the tasks
-     */
     public ArrayList<Task> getTasks() {
         return this.tasks;
     }
 
-    /**
-     * Is init boolean.
-     *
-     * @return the boolean
-     */
     public boolean isInit() {
-        return Zenerbot.INIT_MODE;
+        return Zenerbot.initMode;
     }
 
     /**
@@ -104,9 +99,8 @@ public class Zenerbot {
         Command command;
         try {
             command = parser.getCommand(raw);
-            System.out.println("command = " + command);
             String[] parameters = parser.getParameters(raw);
-            if (!INIT_MODE || command.isScriptable()) {
+            if (!initMode || command.isScriptable()) {
                 command.execute(Zenerbot.getInstance(), parameters);
                 return true;
             } else {
@@ -114,7 +108,7 @@ public class Zenerbot {
             }
 
         } catch (UnknownCommandException | InvalidTaskException e) {
-            if (!INIT_MODE) {
+            if (!initMode) {
                 ui.consoleError(e.getMessage());
             }
             return false;
@@ -124,7 +118,7 @@ public class Zenerbot {
     /** Starts and runs the bot loop. */
     public void run() {
         // pre-initialisation
-        Zenerbot.INIT_MODE = true;
+        Zenerbot.initMode = true;
         ui.consoleMessage("Zenerbot by Isaac Goh\n");
         ui.consoleMessage("Initialising bot...\n");
 
@@ -138,7 +132,7 @@ public class Zenerbot {
         }
 
         // intro
-        Zenerbot.INIT_MODE = false;
+        Zenerbot.initMode = false;
         ui.welcomeMessage();
 
         Command.LIST.execute(this, new String[]{}); // show list
@@ -149,16 +143,16 @@ public class Zenerbot {
         while (scan.hasNextLine()) {
             String cmd = scan.nextLine();
             ui.divider();
-            exec(cmd);  // parses and executes
+            exec(cmd); // parses and executes
             ui.divider();
         }
     }
 
     /** Terminates the bot. */
     public void terminate() {
-        this.save();    // just in case..
+        this.save(); // just in case..
 
         ui.goodbyeMessage();
-        System.exit(0);     // goodbye
+        System.exit(0); // goodbye
     }
 }

@@ -1,8 +1,5 @@
 package zener.tasks;
 
-import zener.exceptions.InvalidTaskException;
-import zener.tasks.Task;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -11,6 +8,8 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
+
+import zener.exceptions.InvalidTaskException;
 
 /** Event tasks start at a specific datetime and ends at a specific date/time. */
 public class Event extends Task {
@@ -30,7 +29,8 @@ public class Event extends Task {
             throw new InvalidTaskException();
         }
 
-        LocalDateTime dtFrom, dtTo;
+        LocalDateTime dtFrom;
+        LocalDateTime dtTo;
         try {
             // can take in either date (as d/M/yyyy) or time (as HHmm) or both
             // defaults to today
@@ -52,7 +52,8 @@ public class Event extends Task {
             TemporalAccessor parsedFrom = formatter.parse(fromStr);
             TemporalAccessor parsedTo = formatter.parse(toStr);
 
-            LocalDate dateFrom, dateTo;
+            LocalDate dateFrom;
+            LocalDate dateTo;
             if (parsedFrom.isSupported(ChronoField.YEAR)) {
                 dateFrom = LocalDate.from(parsedFrom);
             } else {
@@ -89,14 +90,14 @@ public class Event extends Task {
 
     @Override
     public String toCommandString() {
-        return "event " + this.getName() + " /from " + this.from.format(this.formatterCmd) + " /to " +
-                this.to.format(this.formatterCmd);
+        return "event " + this.getName() + " /from " + this.from.format(this.formatterCmd) + " /to "
+                + this.to.format(this.formatterCmd);
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + this.from.format(this.formatter) + ", to: " +
-                this.to.format(this.formatter) + ")" +
-                (this.to.isBefore(LocalDateTime.now()) ? " [expired!]" : "");
+        return "[E]" + super.toString() + " (from: " + this.from.format(this.formatter) + ", to: "
+                + this.to.format(this.formatter) + ")"
+                + (this.to.isBefore(LocalDateTime.now()) ? " [expired!]" : "");
     }
 }

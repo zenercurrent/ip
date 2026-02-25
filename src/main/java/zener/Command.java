@@ -1,14 +1,14 @@
 package zener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import zener.exceptions.InvalidTaskException;
 import zener.exceptions.UnknownCommandException;
 import zener.tasks.Deadline;
 import zener.tasks.Event;
 import zener.tasks.Task;
 import zener.tasks.Todo;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A possible command that can be executed by zener.Zenerbot.
