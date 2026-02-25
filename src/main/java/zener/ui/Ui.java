@@ -1,4 +1,4 @@
-package zener.abstractions;
+package zener.ui;
 
 import zener.Zenerbot;
 

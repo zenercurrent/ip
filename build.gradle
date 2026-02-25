@@ -48,7 +48,7 @@ test {
 }
 
 application {
-    mainClass.set("zener.Main")
+    mainClass.set("zener.Launcher")
 }
 
 shadowJar {
