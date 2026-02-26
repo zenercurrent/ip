@@ -1,10 +1,13 @@
 package zener.abstractions;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
+
 import zener.Command;
 import zener.exceptions.UnknownCommandException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ParserTest {
 

@@ -38,6 +38,6 @@ public class Parser {
                 ? raw.replaceFirst(instruction + " ", "")
                 : "";
 
-        return parameters.split(" ");
+        return parameters.isBlank() ? new String[0] : parameters.split("\\s+");
     }
 }

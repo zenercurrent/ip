@@ -1,9 +1,12 @@
 package zener.tasks;
 
-import org.junit.jupiter.api.Test;
-import zener.exceptions.InvalidTaskException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import zener.exceptions.InvalidTaskException;
 
 public class TodoTest {
 
