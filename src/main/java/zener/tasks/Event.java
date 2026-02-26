@@ -60,7 +60,7 @@ public class Event extends Task {
                 dateFrom = LocalDate.now();
             }
             if (parsedTo.isSupported(ChronoField.YEAR)) {
-                dateTo = LocalDate.from(parsedFrom);
+                dateTo = LocalDate.from(parsedTo);
             } else {
                 dateTo = LocalDate.now();
             }
