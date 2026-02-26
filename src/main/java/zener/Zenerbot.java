@@ -124,16 +124,13 @@ public class Zenerbot {
 
         // pre-initialisation
         Zenerbot.initMode = true;
-        ui.consoleMessage("Zenerbot by Isaac Goh\n");
-        ui.consoleMessage("Initialising bot...\n");
+        ui.consoleMessage("Initialising bot...\nLoading from previous save...");
 
         // loading from save file
-        ui.consoleMessage("Loading from previous save...");
         try {
             storage.load(this.tasks);
         } catch (IOException e) {
-            ui.consoleError("File was unable to be created due to an unknown reason.");
-            ui.consoleError("Loading unsuccessful.\n");
+            ui.consoleError("File was unable to be created due to an unknown reason.\nLoading unsuccessful.\n");
         }
 
         // intro

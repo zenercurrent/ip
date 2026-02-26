@@ -1,5 +1,9 @@
 package zener;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -124,8 +128,9 @@ public enum Command {
     DEADLINE {
         @Override
         void execute(Zenerbot bot, String[] params) {
+            System.out.println("Arrays.asList(params) = " + Arrays.asList(params));
             int b = Arrays.asList(params).indexOf("/by");
-            if (b == 1 || b == -1 || b == params.length - 1) {
+            if (b == 0 || b == -1 || b == params.length - 1) {
                 throw new InvalidTaskException();
             }
 
@@ -155,7 +160,7 @@ public enum Command {
         void execute(Zenerbot bot, String[] params) {
             int f = Arrays.asList(params).indexOf("/from");
             int t = Arrays.asList(params).indexOf("/to");
-            if (f == 1 || f == -1 || f == params.length - 1 || t == -1 || t == params.length - 1 || t - f <= 1) {
+            if (f == 0 || f == -1 || f == params.length - 1 || t == -1 || t == params.length - 1 || t - f <= 1) {
                 throw new InvalidTaskException();
             }
 
@@ -199,6 +204,7 @@ public enum Command {
         }
     },
 
+    /** find: searches for a task that includes the specific search string */
     FIND {
         @Override
         void execute(Zenerbot bot, String[] params) {
@@ -211,9 +217,55 @@ public enum Command {
                 return;
             }
 
-            StringBuilder out = new StringBuilder("These task(s) match your request:");
+            StringBuilder out = new StringBuilder("These task(s) match your request:\n");
             for (int i = 0; i < found.size(); i++) {
-                out.append(i + 1).append(". ").append(found.get(i));
+                out.append(i + 1).append(". ").append(found.get(i)).append("\n");
+            }
+            bot.print(out.toString());
+        }
+    },
+
+    /** schedule: see the schedule for a specific day (default is today) */
+    SCHEDULE {
+        @Override
+        void execute(Zenerbot bot, String[] params) {
+            LocalDate date;
+            if (params.length == 0 || params[0].trim().equals("")) {
+                date = LocalDate.now();
+            } else {
+                try {
+                    date = LocalDate.parse(params[0], DateTimeFormatter.ofPattern("d/M/yyyy"));
+                } catch (DateTimeParseException e) {
+                    bot.print("Invalid date! But I will show you the schedule for today.");
+                    date = LocalDate.now();
+                }
+            }
+
+            ArrayList<Task> result = new ArrayList<>();
+            for (Task t : bot.getTasks()) {
+                if (t instanceof Deadline) {
+                    LocalDate by = ((Deadline) t).getBy().toLocalDate();
+                    if (by.equals(date)) {
+                        result.add(t);
+                    }
+                } else if (t instanceof Event) {
+                    LocalDateTime from = ((Event) t).getFrom();
+                    LocalDateTime to = ((Event) t).getTo();
+                    if (from.isBefore(date.plusDays(1).atStartOfDay()) && to.isAfter(from)) {
+                        result.add(t);
+                    }
+                }
+            }
+
+            String dateString = date.format(DateTimeFormatter.ofPattern("dd MMM ''yy"));
+
+            if (result.size() == 0) {
+                bot.print("There are no tasks scheduled for " + dateString + ".");
+                return;
+            }
+            StringBuilder out = new StringBuilder("These are the relevant task(s) for " + dateString + ":\n");
+            for (int i = 0; i < result.size(); i++) {
+                out.append(i + 1).append(". ").append(result.get(i)).append("\n");
             }
             bot.print(out.toString());
         }
