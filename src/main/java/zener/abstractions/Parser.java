@@ -21,7 +21,7 @@ public class Parser {
         raw = raw.trim();
         assert !raw.isEmpty() : "Command cannot be empty.";
 
-        String instruction = raw.strip().split(" ")[0];
+        String instruction = raw.strip().split("\\s+")[0];
         return Command.fromString(instruction);
     }
 
@@ -33,11 +33,19 @@ public class Parser {
      * @return the parsed parameters
      */
     public String[] getParameters(String raw) {
-        String instruction = raw.strip().split(" ")[0];
-        String parameters = raw.length() > instruction.length()
-                ? raw.replaceFirst(instruction + " ", "")
-                : "";
+        if (raw == null) {
+            return new String[0];
+        }
+        raw = raw.trim();
+        if (raw.isEmpty()) {
+            return new String[0];
+        }
 
-        return parameters.isBlank() ? new String[0] : parameters.split("\\s+");
+        String[] parts = raw.strip().split("\\s+", 2);
+        if (parts.length < 2 || parts[1].isBlank()) {
+            return new String[0];
+        }
+
+        return parts[1].trim().split("\\s+");
     }
 }
