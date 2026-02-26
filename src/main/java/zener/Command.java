@@ -2,6 +2,7 @@ package zener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import zener.exceptions.InvalidTaskException;
 import zener.exceptions.UnknownCommandException;
@@ -204,13 +205,8 @@ public enum Command {
         void execute(Zenerbot bot, String[] params) {
             String search = String.join(" ", params);
             ArrayList<Task> tasks = bot.getTasks();
-            ArrayList<Task> found = new ArrayList<>();
+            List<?> found = tasks.stream().filter(t -> t.getName().contains(search)).toList();
 
-            for (Task t : tasks) {
-                if (t.getName().contains(search)) {
-                    found.add(t);
-                }
-            }
             if (found.size() == 0) {
                 bot.print("No relevant tasks were found.");
                 return;
