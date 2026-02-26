@@ -1,9 +1,12 @@
 package zener.ui;
 
+import java.io.IOException;
 import java.util.Objects;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -21,20 +24,23 @@ public class DialogBox extends HBox {
     private static final Image botImage = new Image(
             Objects.requireNonNull(DialogBox.class.getResourceAsStream("/images/angry_fella.png")));
 
+    @FXML
     private Label text;
+    @FXML
     private ImageView displayPicture;
 
     private DialogBox(String s, Image i) {
-        text = new Label(s);
-        displayPicture = new ImageView(i);
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
+            fxmlLoader.setController(this);
+            fxmlLoader.setRoot(this);
+            fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        // styling
-        text.setWrapText(true);
-        displayPicture.setFitWidth(100.0);
-        displayPicture.setFitHeight(100.0);
-
-        this.setAlignment(Pos.TOP_RIGHT);
-        this.getChildren().addAll(text, displayPicture);
+        text.setText(s);
+        displayPicture.setImage(i);
     }
 
     /**
