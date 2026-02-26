@@ -265,7 +265,7 @@ public enum Command {
             }
             StringBuilder out = new StringBuilder("These are the relevant task(s) for " + dateString + ":\n");
             for (int i = 0; i < result.size(); i++) {
-                out.append(i + 1).append(". ").append(result.get(i));
+                out.append(i + 1).append(". ").append(result.get(i)).append("\n");
             }
             bot.print(out.toString());
         }
