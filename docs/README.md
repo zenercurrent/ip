@@ -165,14 +165,14 @@ You can edit `./data/zener.txt` manually, but with caution.
 
 ## Command summary
 
-| Action   | Format                              | Example                                  |
-|----------|-------------------------------------|------------------------------------------|
-| List     | `list`                              | `list`                                   |
-| Todo     | `todo TASK_NAME`                    | `todo read book`                         |
-| Deadline | `deadline TASK_NAME /by BY`         | `deadline submit report /by 23/2/2025 1045` |
-| Event    | `event EVENT_NAME /from FROM /to TO`| `event meeting /from 1400 /to 1530`      |
-| Mark     | `mark INDEX`                        | `mark 1`                                 |
-| Unmark   | `unmark INDEX`                      | `unmark 1`                               |
-| Delete   | `delete INDEX`                      | `delete 2`                               |
-| Find     | `find KEYWORD...`                   | `find report`                            |
-| Exit     | `bye`                               | `bye`                                    |
+| Action   | Format                               | Example                                     |
+|----------|--------------------------------------|---------------------------------------------|
+| List     | `list`                               | `list`                                      |
+| Todo     | `todo TASK_NAME`                     | `todo read book`                            |
+| Deadline | `deadline TASK_NAME /by BY`          | `deadline submit report /by 23/2/2025 1045` |
+| Event    | `event EVENT_NAME /from FROM /to TO` | `event meeting /from 1400 /to 1530`         |
+| Mark     | `mark INDEX`                         | `mark 1`                                    |
+| Unmark   | `unmark INDEX`                       | `unmark 1`                                  |
+| Delete   | `delete INDEX`                       | `delete 2`                                  |
+| Find     | `find KEYWORD...`                    | `find report`                               |
+| Exit     | `bye`                                | `bye`                                       |
