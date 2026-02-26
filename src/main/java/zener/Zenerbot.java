@@ -1,6 +1,7 @@
 package zener;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 
 import zener.abstractions.Parser;
@@ -150,6 +151,13 @@ public class Zenerbot {
         this.save(); // just in case..
 
         ui.goodbyeMessage();
+        // wait 3 seconds for user to see message
+        try {
+            Thread.sleep(3000); // Pause for 1 second
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // Restore interrupted status
+        }
+
         System.exit(0); // goodbye
     }
 }

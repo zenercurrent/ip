@@ -41,7 +41,8 @@ public class Ui {
      * Displays the set goodbye message!
      */
     public void goodbyeMessage() {
-        dialogContainer.addDialog(DialogBox.createBotDialog("Goodbye! It was a nice chat! :)"));
+        dialogContainer.addDialog(
+                DialogBox.createBotDialog("Goodbye! It was a nice chat! :)"));
 
         System.out.println(Zenerbot.LOGO);
         System.out.println("Isaac Goh");

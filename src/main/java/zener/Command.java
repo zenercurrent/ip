@@ -34,10 +34,11 @@ public enum Command {
                 return;
             }
 
-            bot.print("These are your current tasks:");
+            StringBuilder out = new StringBuilder("These are your current tasks:\n");
             for (int i = 0; i < tasks.size(); i++) {
-                bot.print(i + 1 + ". " + tasks.get(i));
+                out.append(i + 1).append(". ").append(tasks.get(i)).append("\n");
             }
+            bot.print(out.toString());
         }
     },
 
@@ -50,8 +51,7 @@ public enum Command {
             int i = Integer.parseInt(params[0]);
             // check out of bounds
             if (i > tasks.size()) {
-                bot.print("Task does not exist!");
-                bot.print("There are only " + tasks.size() + " tasks in the list currently.");
+                bot.print("Task does not exist!\nThere are only " + tasks.size() + " tasks in the list currently.");
                 return;
             }
 
@@ -59,8 +59,7 @@ public enum Command {
             task.setDone(true);
 
             if (!bot.isInit()) {
-                bot.print("Good work. This task is done:");
-                bot.print("\t" + task);
+                bot.print("Good work. This task is done:\n\t" + task);
 
                 bot.save();
             }
@@ -81,16 +80,14 @@ public enum Command {
             int i = Integer.parseInt(params[0]);
             // check out of bounds
             if (i > tasks.size()) {
-                bot.print("Task does not exist!");
-                bot.print("There are only " + tasks.size() + " tasks in the list currently.");
+                bot.print("Task does not exist!\nThere are only " + tasks.size() + " tasks in the list currently.");
                 return;
             }
 
             Task task = tasks.get(i - 1);
             task.setDone(false);
 
-            bot.print("I will mark this as undone for now:");
-            bot.print("\t" + task);
+            bot.print("I will mark this as undone for now:\n\t" + task);
 
             bot.save();
         }
@@ -109,9 +106,8 @@ public enum Command {
             tasks.add(todo);
 
             if (!bot.isInit()) {
-                bot.print("I have created a new task for you:");
-                bot.print("\t" + todo);
-                bot.print("There are now " + tasks.size() + " task(s) to be done.");
+                bot.print("I have created a new task for you:\n\t" + todo
+                        + "\nThere are now " + tasks.size() + " task(s) to be done.");
 
                 bot.save();
             }
@@ -139,9 +135,8 @@ public enum Command {
             tasks.add(deadline);
 
             if (!bot.isInit()) {
-                bot.print("I have created a new task for you:");
-                bot.print("\t" + deadline);
-                bot.print("There are now " + tasks.size() + " task(s) to be done.");
+                bot.print("I have created a new task for you:\n\t" + deadline
+                        + "There are now " + tasks.size() + " task(s) to be done.");
 
                 bot.save();
             }
@@ -172,8 +167,8 @@ public enum Command {
 
             if (!bot.isInit()) {
                 bot.print("I have created a new task for you:");
-                bot.print("\t" + event);
-                bot.print("There are now " + tasks.size() + " task(s) to be done.");
+                bot.print("I have created a new task for you:\n\t" + event
+                        + "\nThere are now " + tasks.size() + " task(s) to be done.");
 
                 bot.save();
             }
@@ -193,16 +188,14 @@ public enum Command {
             int i = Integer.parseInt(params[0]);
             // check out of bounds
             if (i > tasks.size()) {
-                bot.print("Task does not exist!");
-                bot.print("There are only " + tasks.size() + " tasks in the list currently.");
+                bot.print("Task does not exist!\nThere are only " + tasks.size() + " tasks in the list currently.");
                 return;
             }
 
             Task task = tasks.get(i - 1);
             tasks.remove(i - 1);
-            bot.print("Noted with thanks. I have removed the task:");
-            bot.print("\t" + task);
-            bot.print("Now you are left with " + tasks.size() + " tasks.");
+            bot.print("Noted with thanks. I have removed the task:\n\t" + task
+                    + "\nNow you are left with " + tasks.size() + " tasks.");
         }
     },
 
@@ -223,10 +216,11 @@ public enum Command {
                 return;
             }
 
-            bot.print("These task(s) match your request:");
+            StringBuilder out = new StringBuilder("These task(s) match your request:");
             for (int i = 0; i < found.size(); i++) {
-                bot.print(i + 1 + ". " + found.get(i));
+                out.append(i).append(1).append(". ").append(found.get(i));
             }
+            bot.print(out.toString());
         }
     };
 
