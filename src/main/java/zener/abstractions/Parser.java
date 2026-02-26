@@ -17,6 +17,10 @@ public class Parser {
      * @return the output Command, null if fail
      */
     public Command getCommand(String raw) throws UnknownCommandException, InvalidTaskException {
+        assert raw != null : "Input must not be null.";
+        raw = raw.trim();
+        assert !raw.isEmpty() : "Command cannot be empty.";
+
         String instruction = raw.strip().split(" ")[0];
         return Command.fromString(instruction);
     }
