@@ -26,6 +26,11 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     public void initialize() {
+        assert dialogContainer != null : "Dialog Container was not injected. Check FXML";
+        assert scrollPane != null : "Scroll Pane was not injected. Check FXML";
+        assert userInput != null : "User Input was not injected. Check FXML";
+        assert sendButton != null : "Send Button was not injected. Check FXML";
+
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         bot = Zenerbot.getInstance();
     }

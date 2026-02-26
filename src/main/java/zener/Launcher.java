@@ -7,8 +7,6 @@ import javafx.application.Application;
  */
 public class Launcher {
     public static void main(String[] args) {
-//        Zenerbot bot = Zenerbot.getInstance();
-//        bot.run();
         Application.launch(Main.class, args);
     }
 }
