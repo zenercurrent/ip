@@ -136,7 +136,7 @@ public enum Command {
 
             if (!bot.isInit()) {
                 bot.print("I have created a new task for you:\n\t" + deadline
-                        + "There are now " + tasks.size() + " task(s) to be done.");
+                        + "\nThere are now " + tasks.size() + " task(s) to be done.");
 
                 bot.save();
             }
@@ -166,7 +166,6 @@ public enum Command {
             tasks.add(event);
 
             if (!bot.isInit()) {
-                bot.print("I have created a new task for you:");
                 bot.print("I have created a new task for you:\n\t" + event
                         + "\nThere are now " + tasks.size() + " task(s) to be done.");
 
@@ -218,7 +217,7 @@ public enum Command {
 
             StringBuilder out = new StringBuilder("These task(s) match your request:");
             for (int i = 0; i < found.size(); i++) {
-                out.append(i).append(1).append(". ").append(found.get(i));
+                out.append(i + 1).append(". ").append(found.get(i));
             }
             bot.print(out.toString());
         }
