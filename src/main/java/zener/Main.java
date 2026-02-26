@@ -29,6 +29,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+        // Setting up requirements
         scrollPane = new ScrollPane();
         dialogContainer = new VBox();
         scrollPane.setContent(dialogContainer);
@@ -36,18 +37,12 @@ public class Main extends Application {
         userInput = new TextField();
         sendButton = new Button("Send");
 
-        // trial
-        DialogBox dialogBox = new DialogBox("Hello World!", userImage);
-        DialogBox dialogBox2 = new DialogBox("Wassuppp", botImage, true);
-        dialogContainer.getChildren().addAll(dialogBox, dialogBox2);
-
-
         AnchorPane mainLayout = new AnchorPane();
         mainLayout.getChildren().addAll(scrollPane, userInput, sendButton);
 
         scene = new Scene(mainLayout);
 
-        //Formatting the window to look as expected
+        // Formatting window
         stage.setTitle("ZenerBot");
         stage.setResizable(false);
         stage.setMinHeight(600.0);
@@ -76,7 +71,19 @@ public class Main extends Application {
         AnchorPane.setLeftAnchor(userInput, 1.0);
         AnchorPane.setBottomAnchor(userInput, 1.0);
 
+        // Scroll down on new dialog
+        dialogContainer.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
+
+        // Handle user input
+        sendButton.setOnMouseClicked((event) -> handleUserInput());
+        userInput.setOnAction((event) -> handleUserInput());
+
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void handleUserInput() {
+        dialogContainer.getChildren().addAll(DialogBox.createUserDialog(userInput.getText(), userImage));
+        userInput.clear();
     }
 }
