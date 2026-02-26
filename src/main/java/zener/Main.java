@@ -25,6 +25,7 @@ public class Main extends Application {
             bot.run(ui); // important step
 
             Scene scene = new Scene(ap);
+            stage.setTitle("Zenerbot");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
