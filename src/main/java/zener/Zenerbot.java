@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
 
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
+import javafx.util.Duration;
 import zener.abstractions.Parser;
 import zener.abstractions.Storage;
 import zener.exceptions.InvalidTaskException;
@@ -148,13 +151,9 @@ public class Zenerbot {
         this.save(); // just in case..
 
         ui.goodbyeMessage();
-        // wait 3 seconds for user to see message
-        try {
-            Thread.sleep(3000); // Pause for 1 second
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt(); // Restore interrupted status
-        }
-
-        System.exit(0); // goodbye
+        // wait 2 seconds for user to see message
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(e -> System.exit(0)); // goodbye
+        pause.play();
     }
 }
