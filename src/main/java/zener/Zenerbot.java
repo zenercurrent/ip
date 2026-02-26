@@ -1,23 +1,23 @@
 package zener;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import zener.abstractions.Parser;
 import zener.abstractions.Storage;
-import zener.abstractions.Ui;
 import zener.exceptions.InvalidTaskException;
 import zener.exceptions.UnknownCommandException;
 import zener.tasks.Task;
 import zener.tasks.TaskList;
+import zener.ui.Ui;
 
 /**
  * The ZenerBot client.
  * <p>
  * Built based on the singleton pattern; use {@link #getInstance()} to get the instance,
- * then use {@link #run()} to start the bot loop. Everything else (termination, command parsing, user input, etc.) is
- * handled by the Zenerbot class.
+ * then use {@link #run(Ui ui)} to start the bot loop.
+ * Everything else (termination, command parsing, user input, etc.) is handled by the Zenerbot class.
  */
 public class Zenerbot {
     /** The welcome logo of Zenerbot! */
@@ -41,14 +41,13 @@ public class Zenerbot {
     private final TaskList tasks;
     private final Storage storage;
     private final Parser parser;
-    private final Ui ui;
+    private Ui ui;
 
 
     private Zenerbot() {
         this.tasks = new TaskList();
         this.storage = new Storage("./data/zener.txt");
         this.parser = new Parser();
-        this.ui = new Ui();
     }
 
     /**
@@ -115,8 +114,14 @@ public class Zenerbot {
         }
     }
 
-    /** Starts and runs the bot loop. */
-    public void run() {
+    /**
+     * Starts and runs the bot, with the provided UI setup to define the medium of communication.
+     *
+     * @param ui the ui
+     */
+    public void run(Ui ui) {
+        this.ui = ui;
+
         // pre-initialisation
         Zenerbot.initMode = true;
         ui.consoleMessage("Zenerbot by Isaac Goh\n");
@@ -136,16 +141,9 @@ public class Zenerbot {
         ui.welcomeMessage();
 
         Command.LIST.execute(this, new String[]{}); // show list
-        ui.divider();
 
         // bot loop (continues until termination)
-        Scanner scan = new Scanner(System.in);
-        while (scan.hasNextLine()) {
-            String cmd = scan.nextLine();
-            ui.divider();
-            exec(cmd); // parses and executes
-            ui.divider();
-        }
+        // update: waits for ui.handleUserInput instead
     }
 
     /** Terminates the bot. */
@@ -153,6 +151,13 @@ public class Zenerbot {
         this.save(); // just in case..
 
         ui.goodbyeMessage();
+        // wait 3 seconds for user to see message
+        try {
+            Thread.sleep(3000); // Pause for 1 second
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // Restore interrupted status
+        }
+
         System.exit(0); // goodbye
     }
 }

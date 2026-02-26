@@ -14,3 +14,5 @@ deadline d
 event e
 list
 bye
+
+// update: text-ui-test is no longer used after migrating to JavaFX UI!
