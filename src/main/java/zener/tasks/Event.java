@@ -88,6 +88,14 @@ public class Event extends Task {
         this.to = dtTo;
     }
 
+    public LocalDateTime getFrom() {
+        return this.from;
+    }
+
+    public LocalDateTime getTo() {
+        return this.to;
+    }
+
     @Override
     public String toCommandString() {
         return "event " + this.getName() + " /from " + this.from.format(this.formatterCmd) + " /to "
