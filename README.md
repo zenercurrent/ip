@@ -25,7 +25,7 @@ A JavaFX window should appear. Type commands into the input box and press Enter 
     e.g. in delete INDEX, INDEX is a number (1, 2, 3, ...)
 > - Items in square brackets are optional.
 > - Extra parameters for commands that do not need parameters are ignored.
-> - **Date/time input format is described in the Date & time formats section.**
+> - **Date/time input format is described in the [Date & time](#date-&-time-formats) formats section.**
 
 
 ---
