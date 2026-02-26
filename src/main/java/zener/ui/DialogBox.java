@@ -1,5 +1,7 @@
 package zener.ui;
 
+import java.util.Objects;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -10,9 +12,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 /**
- * The type Dialog box.
+ * Dialog box for Zenerbot JavaFX UI. Can be differentiated by user/bot dialog boxes.
+ * Display pictures are preset in /resources/images
  */
 public class DialogBox extends HBox {
+    private static final Image userImage = new Image(
+            Objects.requireNonNull(DialogBox.class.getResourceAsStream("/images/fella.png")));
+    private static final Image botImage = new Image(
+            Objects.requireNonNull(DialogBox.class.getResourceAsStream("/images/angry_fella.png")));
+
     private Label text;
     private ImageView displayPicture;
 
@@ -43,22 +51,20 @@ public class DialogBox extends HBox {
      * Create a user dialog box. (facing right)
      *
      * @param s the string text
-     * @param i the display image
      * @return the dialog box
      */
-    public static DialogBox createUserDialog(String s, Image i) {
-        return new DialogBox(s, i);
+    public static DialogBox createUserDialog(String s) {
+        return new DialogBox(s, userImage);
     }
 
     /**
      * Create a bot dialog box. (facing left)
      *
      * @param s the string text
-     * @param i the display image
      * @return the dialog box
      */
-    public static DialogBox createBotDialog(String s, Image i) {
-        var dbox = new DialogBox(s, i);
+    public static DialogBox createBotDialog(String s) {
+        var dbox = new DialogBox(s, botImage);
         dbox.flip();
 
         return dbox;

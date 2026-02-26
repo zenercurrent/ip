@@ -1,38 +1,38 @@
 package zener;
 
-import java.util.Objects;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import zener.ui.DialogBox;
+import zener.ui.DialogContainer;
+import zener.ui.Ui;
 
 /** JavaFX Application Main */
 public class Main extends Application {
-    private final Image userImage = new Image(
-            Objects.requireNonNull(this.getClass().getResourceAsStream("/images/fella.png")));
-    private final Image botImage = new Image(
-            Objects.requireNonNull(this.getClass().getResourceAsStream("/images/angry_fella.png")));
 
     private ScrollPane scrollPane;
-    private VBox dialogContainer;
+    private DialogContainer dialogContainer;
     private TextField userInput;
     private Button sendButton;
     private Scene scene;
+    private Zenerbot bot;
 
     @Override
     public void start(Stage stage) {
         // Setting up requirements
         scrollPane = new ScrollPane();
-        dialogContainer = new VBox();
+        dialogContainer = new DialogContainer();
         scrollPane.setContent(dialogContainer);
+
+        Ui ui = new Ui(dialogContainer);
+        bot = Zenerbot.getInstance();
+        bot.run(ui);      // important step
 
         userInput = new TextField();
         sendButton = new Button("Send");
@@ -83,7 +83,12 @@ public class Main extends Application {
     }
 
     private void handleUserInput() {
-        dialogContainer.getChildren().addAll(DialogBox.createUserDialog(userInput.getText(), userImage));
+        String input = userInput.getText();
+
+        dialogContainer.getChildren().addAll(DialogBox.createUserDialog(input));
         userInput.clear();
+
+        // get response from bot
+        bot.exec(input);
     }
 }

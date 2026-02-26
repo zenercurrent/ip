@@ -8,11 +8,22 @@ import zener.Zenerbot;
  * Note: the whole point is to replace raw System.out/in and have an abstraction layer for UI instead.
  */
 public class Ui {
+    @Deprecated
     private static final String DIVIDER = "------------------------------";
+
+    private final DialogContainer dialogContainer;
+
+    public Ui(DialogContainer dialogContainer) {
+        this.dialogContainer = dialogContainer;
+    }
+
 
     /**
      * Displays a divider (to separate outputs).
+     *
+     * @deprecated No longer used after migration to JavaFX UI.
      */
+    @Deprecated
     public void divider() {
         System.out.println(DIVIDER);
     }
@@ -22,16 +33,15 @@ public class Ui {
      */
     public void welcomeMessage() {
         System.out.println(Zenerbot.LOGO);
-        divider();
-        System.out.println("Hello there! I am ZenerBot, your personal assistant.");
-        System.out.println("How can I help?");
+        dialogContainer.addDialog(
+                DialogBox.createBotDialog("Hello there! I am ZenerBot, your personal assistant.\nHow can I help?"));
     }
 
     /**
      * Displays the set goodbye message!
      */
     public void goodbyeMessage() {
-        System.out.println("Goodbye! It was a nice chat! :)");
+        dialogContainer.addDialog(DialogBox.createBotDialog("Goodbye! It was a nice chat! :)"));
 
         System.out.println(Zenerbot.LOGO);
         System.out.println("Isaac Goh");
@@ -42,7 +52,8 @@ public class Ui {
      * Eg: loading messages, for user's info
      */
     public void consoleMessage(String message) {
-        System.out.println(message);
+        var dbox = DialogBox.createBotDialog(message);
+        dialogContainer.addDialog(dbox);
     }
 
     /**
@@ -50,6 +61,7 @@ public class Ui {
      */
     public void consoleError(String message) {
         // for now, no differentiation. could be different in the future.
-        System.out.println(message);
+        var dbox = DialogBox.createBotDialog(message);
+        dialogContainer.addDialog(dbox);
     }
 }
