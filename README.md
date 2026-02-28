@@ -2,6 +2,8 @@
 
 Zenerbot is a lightweight task manager chatbot with a simple chat-style GUI. It helps you track todos, deadlines, and events using short commands.
 
+###### by Isaac Goh 
+
 ---
 
 ## Quick Start
@@ -176,3 +178,4 @@ You can edit `./data/zener.txt` manually, but with caution.
 | Delete   | `delete INDEX`                       | `delete 2`                                  |
 | Find     | `find KEYWORD...`                    | `find report`                               |
 | Exit     | `bye`                                | `bye`                                       |
+

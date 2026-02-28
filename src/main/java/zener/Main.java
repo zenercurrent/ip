@@ -24,6 +24,7 @@ public class Main extends Application {
             Zenerbot bot = Zenerbot.getInstance();
             bot.run(ui); // important step
 
+
             Scene scene = new Scene(ap);
             stage.setTitle("Zenerbot");
             stage.setScene(scene);

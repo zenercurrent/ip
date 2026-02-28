@@ -2,6 +2,8 @@
 
 Zenerbot is a lightweight task manager chatbot with a simple chat-style GUI. It helps you track todos, deadlines, and events using short commands.
 
+###### by Isaac Goh
+
 ---
 
 ## Quick Start
@@ -20,12 +22,12 @@ A JavaFX window should appear. Type commands into the input box and press Enter 
 
 > ### Notes about command format
 > - Commands are case-insensitive.
-   e.g. todo read book and TODO read book work the same.
+    e.g. todo read book and TODO read book work the same.
 > - Words in UPPER_CASE are parameters you provide.
-  e.g. in delete INDEX, INDEX is a number (1, 2, 3, ...)
+    e.g. in delete INDEX, INDEX is a number (1, 2, 3, ...)
 > - Items in square brackets are optional.
 > - Extra parameters for commands that do not need parameters are ignored.
-> - **Date/time input format is described in the Date & time formats section.**
+> - **Date/time input format is described in the [Date & time](#date-&-time-formats) formats section.**
 
 
 ---
@@ -83,7 +85,7 @@ Examples:
 
 ### 5) Mark a task done: `mark`
 
-Marks a task (by index) as completed. 
+Marks a task (by index) as completed.
 
 Format:
 `mark INDEX`
@@ -137,7 +139,7 @@ Zenerbot accepts flexible inputs for deadlines/events:
 
 - **Date only format** `d/M/yyyy`
   - _Example: `23/2/2025`_
-  - time defaults to **23:59** (deadlines, end of events), **00:00** (start of events) 
+  - time defaults to **23:59** (deadlines, end of events), **00:00** (start of events)
 - **Time only format** `HHmm` (24-hour)
   - _Example: `1045`_
   - date defaults to **today**
@@ -157,7 +159,7 @@ You do not need to manually save — Zenerbot saves whenever tasks change (e.g.,
 You can edit `./data/zener.txt` manually, but with caution.
 
 > **Caution!**
-> 
+>
 > If you make the file invalid, some lines may fail to load. <br>
 > It’s recommended to back up the file before editing.
 
@@ -176,3 +178,4 @@ You can edit `./data/zener.txt` manually, but with caution.
 | Delete   | `delete INDEX`                       | `delete 2`                                  |
 | Find     | `find KEYWORD...`                    | `find report`                               |
 | Exit     | `bye`                                | `bye`                                       |
+
