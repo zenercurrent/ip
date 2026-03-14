@@ -126,7 +126,20 @@ Examples:
 
 `find cs2103 meeting`
 
-### 9) Exit: `bye`
+### 9) See the schedule of the day: `schedule`
+
+Shows all tasks relevant to the given date. Defaults to today if no valid date is provided.
+
+Format:
+`schedule [DATE]`
+
+Examples:
+
+`schedule`
+
+`schedule 23/2/2025`
+
+### 10) Exit: `bye`
 
 Saves and exits the application.
 
@@ -177,5 +190,5 @@ You can edit `./data/zener.txt` manually, but with caution.
 | Unmark   | `unmark INDEX`                       | `unmark 1`                                  |
 | Delete   | `delete INDEX`                       | `delete 2`                                  |
 | Find     | `find KEYWORD...`                    | `find report`                               |
+| Schedule | `schedule [DATE]`                    | `schedule 23/2/2025`                        |
 | Exit     | `bye`                                | `bye`                                       |
-
