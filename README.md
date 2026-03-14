@@ -2,7 +2,7 @@
 
 Zenerbot is a lightweight task manager chatbot with a simple chat-style GUI. It helps you track todos, deadlines, and events using short commands.
 
-###### by Isaac Goh 
+###### by Isaac Goh
 
 ---
 
@@ -126,7 +126,20 @@ Examples:
 
 `find cs2103 meeting`
 
-### 9) Exit: `bye`
+### 9) See the schedule of the day: `schedule`
+
+Shows all tasks relevant to the given date. Defaults to today if no valid date is provided.
+
+Format:
+`schedule [DATE]`
+
+Examples:
+
+`schedule`
+
+`schedule 23/2/2025`
+
+### 10) Exit: `bye`
 
 Saves and exits the application.
 
@@ -138,13 +151,13 @@ Format:
 Zenerbot accepts flexible inputs for deadlines/events:
 
 - **Date only format** `d/M/yyyy`
-   - _Example: `23/2/2025`_
-   - time defaults to **23:59** (deadlines, end of events), **00:00** (start of events)
+    - _Example: `23/2/2025`_
+    - time defaults to **23:59** (deadlines, end of events), **00:00** (start of events)
 - **Time only format** `HHmm` (24-hour)
-   - _Example: `1045`_
-   - date defaults to **today**
+    - _Example: `1045`_
+    - date defaults to **today**
 - **Combined date + time format** `d/M/yyyy HHmm`
-   - Example: `23/2/2025 1045`
+    - Example: `23/2/2025 1045`
 
 ### Saving the data
 
@@ -177,5 +190,5 @@ You can edit `./data/zener.txt` manually, but with caution.
 | Unmark   | `unmark INDEX`                       | `unmark 1`                                  |
 | Delete   | `delete INDEX`                       | `delete 2`                                  |
 | Find     | `find KEYWORD...`                    | `find report`                               |
+| Schedule | `schedule [DATE]`                    | `schedule 23/2/2025`                        |
 | Exit     | `bye`                                | `bye`                                       |
-
